@@ -1,0 +1,19 @@
+{
+  "家庭教育.md": {
+    "path": "assets/notes/家庭教育.md",
+    "type": "md",
+    "date": "9/14/2025, 12:14:10 PM"
+  },
+  "测试目录": {
+    "测试文件1.md": {
+      "path": "assets/notes/测试目录/测试文件1.md",
+      "type": "md",
+      "date": "9/14/2025, 12:14:10 PM"
+    },
+    "测试文件2.md": {
+      "path": "assets/notes/测试目录/测试文件2.md",
+      "type": "md",
+      "date": "9/14/2025, 12:14:10 PM"
+    }
+  }
+}

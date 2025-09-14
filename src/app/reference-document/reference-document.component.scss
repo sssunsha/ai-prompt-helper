@@ -1,0 +1,13 @@
+@import '../../base.scss';
+:host {
+	.link {
+		width: 100%;
+		min-height: 2.5rem;
+		line-height: 2.5rem;
+		// border-bottom: solid darkslategray;
+		a {
+			font-size: 14px;
+			color: var(--sapAvatar_6_BorderColor);
+		}
+	}
+}

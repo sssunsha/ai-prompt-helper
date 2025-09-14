@@ -1,0 +1,78 @@
+@import '../../base.scss';
+:host {
+	fd-layout-grid {
+		padding: 1rem;
+		.prompt- {
+			&options {
+				overflow-y: auto;
+				&-select {
+					width: 100%;
+				}
+				::ng-deep {
+					fd-checkbox {
+						display: none;
+					}
+				}
+				@include mobile() {
+					position: fixed;
+					right: 0;
+					left: 0;
+					height: calc(100vh - 120px);
+				}
+				@include desktop() {
+					position: unset;
+					height: unset;
+				}
+			}
+			&result {
+				::ng-deep {
+					button {
+						height: 3rem;
+						margin: auto 1rem;
+					}
+				}
+
+				@include mobile() {
+					position: fixed;
+					bottom: 0;
+					right: 0;
+					left: 0;
+					border: 3px solid gray;
+					border-radius: 10px;
+				}
+				@include desktop() {
+					position: unset;
+					border: unset;
+					border-radius: unset;
+				}
+
+				&-expand-button {
+					position: absolute;
+					right: -10px;
+					top: -15px;
+				}
+			}
+		}
+		::ng-deep {
+			.orignal-question {
+				span {
+					color: var(--sapAvatar_6_BorderColor);
+				}
+			}
+			.after-enhancement {
+				span {
+					color: var(--sapAvatar_8_Background);
+				}
+			}
+		}
+	}
+
+	.action-buttons {
+		display: flex;
+		padding: 0 2rem;
+		justify-content: flex-end;
+		button {
+			margin: 0 2rem 0 0;
+		}
+	}
+}

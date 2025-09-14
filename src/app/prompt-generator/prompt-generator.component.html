@@ -1,0 +1,124 @@
+<fd-layout-grid>
+	<div fdLayoutGridRow>
+		<div [fdLayoutGridCol]="12" [colLg]="6" class="prompt-options">
+			<fd-tab-list>
+				<fd-tab [title]="'问题'" *ngIf="service.isMobileMode">
+					<div fd-form-item class="sap-margin-top-small">
+						<ng-container *ngTemplateOutlet="promptResult"></ng-container>
+					</div>
+				</fd-tab>
+				<fd-tab [title]="service.isMobileMode ? '材料' : '参考材料'">
+					<div fd-form-item class="sap-margin-top-small">
+						<textarea
+							fd-form-control
+							[rows]="service.isMobileMode ? 25 : 42"
+							id="reference-doc-textarea"
+							placeholder="请填入参考材料"
+							(ngModelChange)="
+								service.promptContentChangedSubject.next(EPromptContentChangedType.REFERENCE_DOC)
+							"
+							[(ngModel)]="service.referenceDoc"
+						></textarea>
+					</div>
+				</fd-tab>
+				<fd-tab [title]="service.isMobileMode ? '范例' : '提示词范例'">
+					<app-prompt-sample></app-prompt-sample>
+				</fd-tab>
+				<fd-tab [title]="service.isMobileMode ? '策略' : '提示词增强策略'">
+					<app-prompt-strategy></app-prompt-strategy>
+				</fd-tab>
+				<fd-tab [title]="service.isMobileMode ? '设置' : '高级设置'">
+					<app-prompt-advanced-setting></app-prompt-advanced-setting>
+				</fd-tab>
+			</fd-tab-list>
+		</div>
+		@if (!service.isMobileMode) {
+		<div [fdLayoutGridCol]="12" [colLg]="6" class="prompt-result">
+			<div class="ai-model-select-desktop">
+				<fd-form-group [isInline]="true">
+					<div fd-form-item>
+						<fd-radio-button [value]="0" [id]="'radio-1'" name="Kimi" [(ngModel)]="service.aiModel"
+							>Kimi
+						</fd-radio-button>
+					</div>
+					<div fd-form-item>
+						<fd-radio-button [value]="1" [id]="'radio-2'" name="TenXunYuanBao" [(ngModel)]="service.aiModel"
+							>腾讯元宝
+						</fd-radio-button>
+					</div>
+					<div fd-form-item>
+						<fd-radio-button [value]="6" [id]="'radio-7'" name="DeepSeek" [(ngModel)]="service.aiModel">
+							DeepSeek
+						</fd-radio-button>
+					</div>
+					<div fd-form-item>
+						<fd-radio-button [value]="2" [id]="'radio-3'" name="DouBao" [(ngModel)]="service.aiModel">
+							豆包
+						</fd-radio-button>
+					</div>
+					<div fd-form-item>
+						<fd-radio-button [value]="3" [id]="'radio-4'" name="QianWen" [(ngModel)]="service.aiModel">
+							通义千问
+						</fd-radio-button>
+					</div>
+					<div fd-form-item>
+						<fd-radio-button [value]="4" [id]="'radio-5'" name="WenYan" [(ngModel)]="service.aiModel">
+							文言一心
+						</fd-radio-button>
+					</div>
+					<div fd-form-item>
+						<fd-radio-button [value]="5" [id]="'radio-6'" name="MiTaSouSuo" [(ngModel)]="service.aiModel">
+							秘塔AI搜索
+						</fd-radio-button>
+					</div>
+					<button fd-button label="Go" fdCozy (click)="go()" fdType="emphasized"></button>
+				</fd-form-group>
+			</div>
+
+			<ng-container *ngTemplateOutlet="promptResult"></ng-container>
+		</div>
+		}
+	</div>
+</fd-layout-grid>
+<ng-template #promptResult>
+	<div fd-form-item class="sap-margin-top-small">
+		<label fd-form-label [colon]="true" for="orignal-question-textarea" class="orignal-question">初始问题</label>
+		<fd-select
+			placeholder="请选择提问模板"
+			fdCompact
+			[value]="service.selectedQuestionTemplate"
+			(valueChange)="handleQuestionTemplateChange($event)"
+		>
+			@for (option of service.questionTemplateOptions; track option) {
+			<li fd-option [value]="option" [title]="option.description">{{ option.title }}</li>
+			}
+		</fd-select>
+		<textarea
+			fd-form-control
+			[rows]="service.isMobileMode ? 6 : 10"
+			id="orignal-question-textarea"
+			placeholder="请填入你的需求"
+			[(ngModel)]="service.originalQuestion"
+			(ngModelChange)="service.promptContentChangedSubject.next(EPromptContentChangedType.QUESTION)"
+		></textarea>
+	</div>
+	<div>
+		<div fd-form-item class="sap-margin-top-small">
+			<label fd-form-label [colon]="true" for="after-enhancement-textarea" class="after-enhancement"
+				>最终提示词</label
+			>
+			<textarea
+				fd-form-control
+				[rows]="service.isMobileMode ? 13 : 25"
+				id="after-enhancement-textarea"
+				placeholder=""
+				[(ngModel)]="service.afterEnhancement"
+			></textarea>
+		</div>
+		<br />
+		<div class="action-buttons">
+			<button fd-button label="Clean" fdCozy (click)="clean()" fdType="ghost"></button>
+			<button fd-button label="Go" fdCozy (click)="go()" fdType="emphasized"></button>
+		</div>
+	</div>
+</ng-template>

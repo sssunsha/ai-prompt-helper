@@ -1,0 +1,248 @@
+<div class="settings">
+	<div>
+		<label fd-form-label> 开启 </label>
+		<fd-switch
+			fdCompact
+			[(ngModel)]="service.PromptAdvancedSetting.enabled"
+			(ngModelChange)="service.updatePromptAdvancedSetting()"
+		></fd-switch>
+	</div>
+
+	<div>
+		<label fd-form-label> 输出格式 </label>
+		<fd-select
+			[disabled]="!service.PromptAdvancedSetting.enabled"
+			[(ngModel)]="service.PromptAdvancedSetting.outputFormat"
+			(ngModelChange)="service.updatePromptAdvancedSetting()"
+			placeholder="选择输出格式"
+		>
+			<li fd-option *ngFor="let format of service.outputFormats" [value]="format">
+				{{ format }}
+			</li>
+		</fd-select>
+	</div>
+
+	<div>
+		<label fd-form-label>
+			不做指令 (负向约束)<button
+				fd-button
+				fdType="transparent"
+				glyph="sys-help"
+				[fdPopoverTrigger]="negative"
+			></button
+		></label>
+
+		<fd-popover #negative>
+			<div>含义：在 LLM 中，Negative 通常与负向指令或负向约束相关，是指模型需要避免或排除的内容。</div>
+			<div>作用：用于限制模型的输出，使其不包含某些特定的词汇、主题或不符合要求的内容。</div>
+			<div>
+				使用范例：比如要求模型生成一个关于旅游的段落，但不能提到“疫情”，那么“疫情”就是负向指令的内容，模型需要在生成过程中避免出现该词。
+			</div>
+		</fd-popover>
+		<textarea
+			[disabled]="!service.PromptAdvancedSetting.enabled"
+			fd-form-control
+			rows="5"
+			id="negative-textarea"
+			placeholder="不要生成敏感信息"
+			[(ngModel)]="service.PromptAdvancedSetting.negative"
+			(ngModelChange)="service.updatePromptAdvancedSetting()"
+		></textarea>
+	</div>
+
+	<div>
+		<label fd-form-label>
+			temperature 温度 (0 ~2)<button
+				fd-button
+				fdType="transparent"
+				glyph="sys-help"
+				[fdPopoverTrigger]="temperature"
+			></button>
+		</label>
+		<fd-popover #temperature>
+			<div>含义：温度参数用于调整模型生成文本的随机性或多样性。</div>
+			<div>作用：</div>
+			<div>
+				低温度值（如
+				0.1-0.5）：模型倾向于选择概率最高的词汇，生成的文本更连贯、确定性更高，但可能缺乏多样性，适合需要精确性和一致性的任务，如技术文档撰写、事实性问答等。
+			</div>
+			<div>
+				高温度值（如
+				1.5-2.0）：模型会更多地选择概率较低的词汇，生成的文本更具随机性和创造性，但可能会降低连贯性，适用于创意写作、头脑风暴等需要多样性的场景。
+			</div>
+			<div>使用范例：</div>
+			<div>
+				低温度：输入“春天的景色很美，因为……”，设置温度为
+				0.2，模型可能会生成“春天的景色很美，因为花儿都开了，绿树成荫，阳光明媚。”
+			</div>
+			<div>
+				高温度：同样输入“春天的景色很美，因为……”，但将温度设置为
+				1.8，模型可能会生成“春天的景色很美，因为它像一幅流动的画，蝴蝶在梦中跳舞，时间都慢了下来。”
+			</div>
+		</fd-popover>
+		<input
+			[disabled]="!service.PromptAdvancedSetting.enabled"
+			type="number"
+			fd-form-control
+			[(ngModel)]="service.PromptAdvancedSetting.temperature"
+			min="0"
+			max="2"
+			step="0.1"
+			(ngModelChange)="service.updatePromptAdvancedSetting()"
+		/>
+	</div>
+
+	<div>
+		<label fd-form-label>
+			Top-k 采样策略 (0 ~ 100)<button
+				fd-button
+				fdType="transparent"
+				glyph="sys-help"
+				[fdPopoverTrigger]="top_k"
+			></button
+		></label>
+		<fd-popover #top_k>
+			<div>
+				含义：Top-k 是一种用于控制语言模型生成文本的采样策略。在每一步生成时，模型会从概率分布中选择概率最高的前
+				k
+				个词汇作为候选词，并从这些候选词中随机选择下一个词。这种方法可以有效过滤掉低概率的噪声词，同时保留高概率的合理词汇。
+			</div>
+			<div>作用：</div>
+			<div>过滤低概率词：通过只保留概率最高的前 k 个词汇，Top-k 采样可以避免生成低质量或不相关的词汇。</div>
+			<div>
+				平衡多样性与稳定性：较小的 k 值（如 10 或 20）可以使生成的文本更稳定、更连贯，但可能缺乏多样性；较大的 k
+				值（如 50 或 100）可以增加多样性，但可能引入一些不太常见的词汇。
+			</div>
+			<div>控制生成质量：通过调整 k 的值，可以在生成文本的质量和多样性之间进行权衡。</div>
+			<div>应用场景：</div>
+			<div>小 k 值（10 到 30）：适合技术文档、翻译等需要高准确性的任务。</div>
+			<div>大 k 值（50 到 100）：适合创意写作、故事生成等需要多样性的任务。</div>
+		</fd-popover>
+		<input
+			[disabled]="!service.PromptAdvancedSetting.enabled"
+			type="number"
+			fd-form-control
+			[(ngModel)]="service.PromptAdvancedSetting.top_k"
+			min="0"
+			max="100"
+			step="1"
+			(ngModelChange)="service.updatePromptAdvancedSetting()"
+		/>
+	</div>
+
+	<div>
+		<label fd-form-label>
+			Top-p 核采样值 (0 ~1)<button
+				fd-button
+				fdType="transparent"
+				glyph="sys-help"
+				[fdPopoverTrigger]="top_p"
+			></button>
+		</label>
+		<fd-popover #top_p>
+			<div>含义：Top-p 是一种动态的候选词选择方法，通过累积概率来选择候选词。</div>
+			<div>作用：</div>
+			<div>
+				低 Top-p 值（如
+				0.1-0.3）：只考虑累积概率最高的少数几个词，生成的文本更集中、更一致，适合需要高准确性的任务。
+			</div>
+			<div>
+				高 Top-p 值（如 0.7-0.9）：考虑更多的候选词，生成的文本更多样化和随机，适合需要创造性和多样性的任务。
+			</div>
+			<div>应用场景：</div>
+			<div>低 Top-p：适合生成简洁、准确的文本，如新闻标题、摘要等。</div>
+			<div>高 Top-p：适合生成创意性内容，如诗歌、故事等。</div>
+		</fd-popover>
+		<input
+			[disabled]="!service.PromptAdvancedSetting.enabled"
+			type="number"
+			fd-form-control
+			[(ngModel)]="service.PromptAdvancedSetting.top_p"
+			min="0"
+			max="1"
+			step="0.01"
+			(ngModelChange)="service.updatePromptAdvancedSetting()"
+		/>
+	</div>
+
+	<div>
+		<label fd-form-label>
+			max_length 最大长度
+			<button fd-button fdType="transparent" glyph="sys-help" [fdPopoverTrigger]="max_length"></button
+		></label>
+		<fd-popover #max_length>
+			<div>含义：指模型生成文本的最大长度，通常以 token（标记）为单位。</div>
+			<div>作用：限制模型输出的长度，避免生成过长或过短的文本，确保输出符合用户的需求和应用场景。</div>
+			<div>
+				使用范例：如果需要一个简短的新闻标题，可以将 max_length 设置为 10-20 个
+				token；若需要一篇详细的报告，则可以设置为几百甚至上千个 token。
+			</div>
+		</fd-popover>
+		<input
+			[disabled]="!service.PromptAdvancedSetting.enabled"
+			type="number"
+			fd-form-control
+			[(ngModel)]="service.PromptAdvancedSetting.max_length"
+			min="1"
+			(ngModelChange)="service.updatePromptAdvancedSetting()"
+		/>
+	</div>
+
+	<div>
+		<label fd-form-label>
+			frequency_penalty 频率惩罚 (-2.0 ~2.0)<button
+				fd-button
+				fdType="transparent"
+				glyph="sys-help"
+				[fdPopoverTrigger]="frequency_penalty"
+			></button>
+		</label>
+		<fd-popover #frequency_penalty>
+			<div>含义：对生成文本中重复出现的词汇或短语进行惩罚，降低其再次出现的概率。</div>
+			<div>作用：减少文本中的重复内容，使生成的文本更加多样化、自然，避免出现单调重复的语句。</div>
+			<div>
+				使用范例：在生成一个产品介绍时，如果模型总是重复使用“非常好”这个词来形容产品，设置频率惩罚后，模型会尝试使用其他词汇来表达类似的意思，如“出色”“卓越”等。
+			</div>
+		</fd-popover>
+		<input
+			[disabled]="!service.PromptAdvancedSetting.enabled"
+			type="number"
+			fd-form-control
+			[(ngModel)]="service.PromptAdvancedSetting.frequency_penalty"
+			min="-2.0"
+			max="2.0"
+			step="0.1"
+			(ngModelChange)="service.updatePromptAdvancedSetting()"
+		/>
+	</div>
+
+	<div>
+		<label fd-form-label>
+			presence_penalty 存在惩罚 (-2.0 ~2.0)<button
+				fd-button
+				fdType="transparent"
+				glyph="sys-help"
+				[fdPopoverTrigger]="presence_penalty"
+			></button
+		></label>
+		<fd-popover #presence_penalty>
+			<div>含义：与频率惩罚类似，但它是基于词汇是否出现过进行惩罚，而不是根据出现的频率。</div>
+			<div>
+				作用：鼓励模型生成更多新颖的内容，避免在文本中重复使用已经出现过的词汇或概念，进一步提高文本的多样性。
+			</div>
+			<div>
+				使用范例：在创作一个故事时，如果模型已经提到过“勇敢的骑士”，设置存在惩罚后，模型在后续生成中可能会尝试提到“智慧的巫师”等其他角色，而不是一直重复“勇敢的骑士”。
+			</div>
+		</fd-popover>
+		<input
+			[disabled]="!service.PromptAdvancedSetting.enabled"
+			type="number"
+			fd-form-control
+			[(ngModel)]="service.PromptAdvancedSetting.presence_penalty"
+			min="-2.0"
+			max="2.0"
+			step="0.1"
+			(ngModelChange)="service.updatePromptAdvancedSetting()"
+		/>
+	</div>
+</div>

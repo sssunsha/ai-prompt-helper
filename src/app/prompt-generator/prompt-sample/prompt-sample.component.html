@@ -1,0 +1,51 @@
+<div fd-form-item class="sap-margin-top-small">
+	<fd-toolbar>
+		<fd-input-group
+			id="search-input-group"
+			glyph="decline"
+			glyphAriaLabel="Clear"
+			placeholder="Search"
+			[button]="true"
+			[disabled]="false"
+			[(ngModel)]="searchTerm"
+			(ngModelChange)="handleSearchTermChange($event)"
+			(addOnButtonClicked)="handleSearchTermChange('')"
+		>
+		</fd-input-group>
+	</fd-toolbar>
+	<ul fd-list>
+		@for (group of displayedGroups; track group; let indGroup = $index) {
+		<li
+			fd-list-item
+			class="group-item"
+			[interactive]="true"
+			(click)="onExpand(group)"
+			*ngIf="group.items && group.items.length > 0"
+		>
+			<div fd-list-title>
+				{{ group.title }}
+				<fd-icon glyph="slim-arrow-right" *ngIf="!group.expanded"></fd-icon>
+				<fd-icon glyph="slim-arrow-down" *ngIf="group.expanded"></fd-icon>
+			</div>
+		</li>
+		@if (!!group.expanded) { @for (item of group.items; track item; let indItem = $index) {
+		<li
+			fd-list-item
+			class="item-item"
+			[title]="item.description || item.content"
+			[interactive]="true"
+			(click)="onSelected(item)"
+			[selected]="!!item.selected"
+		>
+			<span fd-list-title>
+				{{ item.title }}
+			</span>
+			<span fd-list-secondary type="critical" *ngIf="!!searchTerm"> {{ group.title }} </span>
+		</li>
+		} } } @if (!displayedGroups || displayedGroups.length === 0) {
+		<li fd-list-item [noData]="true">
+			<span fd-list-title> No results found! </span>
+		</li>
+		}
+	</ul>
+</div>

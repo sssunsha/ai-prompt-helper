@@ -1,0 +1,7 @@
+{
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnPaste": true,
+	"editor.formatOnSave": true,
+	"notebook.defaultFormatter": "rvest.vs-code-prettier-eslint",
+	"idf.pythonInstallPath": "/Users/I340818/.pyenv/shims/python"
+}

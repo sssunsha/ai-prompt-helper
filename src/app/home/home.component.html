@@ -1,0 +1,34 @@
+<fd-select class="ai-model-select-mobile" fdCozy [value]="service.aiModel" (valueChange)="service.aiModel = $event">
+	<li fd-option *ngFor="let option of aiModelList" [value]="option.type">{{ option.name }}</li>
+</fd-select>
+<fd-dynamic-page size="large" [autoResponsive]="false">
+	<fd-dynamic-page-header title="AI Helper">
+		<fd-dynamic-page-global-actions>
+			<fd-toolbar fdType="transparent" [clearBorder]="true" fdCozy>
+				<button
+					class="theme-switcher"
+					fd-button
+					title="Theme Switcher"
+					fdType="transparent"
+					glyph="palette"
+					[fdMenuTrigger]="themeMenu"
+				></button>
+
+				<fd-menu #themeMenu>
+					@for (theme of themes; track theme) {
+					<li fd-menu-item>
+						<div fd-menu-interactive (click)="selectTheme(theme.id)">
+							<span fd-menu-title>{{ theme.name }}</span>
+						</div>
+					</li>
+					}
+				</fd-menu>
+			</fd-toolbar>
+		</fd-dynamic-page-global-actions>
+	</fd-dynamic-page-header>
+	<fd-tab-list>
+		<fd-tab title="Prompt Generator"><app-prompt-generator></app-prompt-generator></fd-tab>
+		<fd-tab title="Tools & Notes"><app-tools></app-tools></fd-tab>
+		<fd-tab title="Reference"><app-reference-document></app-reference-document></fd-tab>
+	</fd-tab-list>
+</fd-dynamic-page>

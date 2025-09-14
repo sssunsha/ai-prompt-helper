@@ -1,0 +1,27 @@
+<div fd-form-item class="sap-margin-top-small">
+	<fd-multi-combobox
+		#multiCombobox
+		[autoResize]="true"
+		name="array-of-objects"
+		inputId="array-of-objects"
+		placeholder="请选择提示词增强策略"
+		[dataSource]="dataSource"
+		displayKey="name"
+		lookupKey="id"
+		[selectedItems]="selectedItems"
+		(selectionChange)="onSelect($event)"
+	></fd-multi-combobox>
+</div>
+<div class="strategy">
+	@for (item of strategyMap; track $index) { @if (!!item[1].enabled) {
+	<label fd-form-label class="strategy-type">{{ item[0] | titlecase }}</label>
+	@for(stratgy of item[1].strategies; track $index) {
+	<label fd-form-label *ngIf="stratgy.label">{{ stratgy.label }}</label>
+	<textarea
+		fd-form-control
+		rows="5"
+		[(ngModel)]="stratgy.content"
+		(ngModelChange)="service.promptContentChangedSubject.next(EPromptContentChangedType.STRATEGY)"
+	></textarea>
+	} } }
+</div>

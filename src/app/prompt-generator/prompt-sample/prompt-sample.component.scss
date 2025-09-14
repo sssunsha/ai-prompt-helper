@@ -1,0 +1,35 @@
+@import '../../../base.scss';
+
+:host {
+	.fd-list__item.is-selected {
+		background: var(--sapContent_Illustrative_Color9);
+	}
+	fd-toolbar {
+		margin-top: 10px;
+		padding: unset;
+	}
+	fd-input-group {
+		width: 100%;
+	}
+	ul {
+		margin-top: 10px;
+		overflow: scroll;
+		max-height: 650px;
+	}
+
+	.group-item {
+		div {
+			color: var(--sapIndicationColor_3_Background);
+			fd-icon {
+				float: right;
+			}
+		}
+	}
+
+	.item-item {
+		padding-left: 3rem;
+		span {
+			font-size: 14px;
+		}
+	}
+}

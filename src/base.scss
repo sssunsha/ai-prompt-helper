@@ -1,0 +1,75 @@
+@import './styles.scss';
+
+@mixin bg-bush {
+	background-image: url('./assets/resources/pic/background/bush.webp');
+}
+
+@mixin bg-floor-tile {
+	background-image: url('./assets/resources/pic/background/floor-tile.png');
+}
+
+@mixin bg-leaves {
+	background-image: url('./assets/resources/pic/background/leaves.webp');
+}
+
+@mixin bg-light-veneer {
+	background-image: url('./assets/resources/pic/background/light-veneer.webp');
+}
+
+@mixin bg-restaurant {
+	background-image: url('./assets/resources/pic/background/restaurant.webp');
+}
+
+@mixin bg-y-so-serious {
+	background-image: url('./assets/resources/pic/background/y-so-serious.png');
+	::ng-deep {
+		markdown {
+			color: wheat;
+			a {
+				color: lightcyan;
+			}
+		}
+	}
+}
+
+@mixin bg-sakura {
+	background-image: url('./assets/resources/pic/background/sakura.webp');
+}
+
+@mixin bg-zig-zag-wool {
+	background-image: url('./assets/resources/pic/background/zig-zag-wool.webp');
+	::ng-deep {
+		markdown {
+			color: gainsboro;
+			a {
+				color: lightseagreen;
+			}
+		}
+	}
+}
+
+host {
+	display: block;
+}
+
+.content {
+	@include bg-floor-tile();
+}
+
+label {
+	span {
+		font-weight: bold;
+	}
+}
+
+@mixin desktop {
+	@media screen and (min-width: 1024px) {
+		@content;
+	}
+}
+
+@mixin mobile {
+	@media screen and (max-width: 1024px) {
+		@content;
+	}
+}

@@ -1,0 +1,11 @@
+@import '../../../base.scss';
+
+:host {
+	.settings {
+		display: flex;
+		flex-direction: column;
+		fd-select {
+			width: 100%;
+		}
+	}
+}

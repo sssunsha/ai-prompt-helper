@@ -1,0 +1,48 @@
+<fd-flexible-column-layout [layout]="layout">
+	<ng-template #startColumn>
+		<div>
+			<ul fd-list fdCompact>
+				@for (item of service.noteList; track $index) {
+					<li
+						fd-list-item
+						(click)="onListClicked(item)"
+						[unread]="item.type === 'folder'"
+						ngClass="{{ item.type === 'folder' ? 'folder-item' : 'file-item' }}"
+					>
+						<span fd-list-title> {{ item.title }} </span>
+						@if (item.type === 'folder' && item.children && item.children.length > 0) {
+							<i fd-list-icon glyph="navigation-down-arrow" *ngIf="!item.isHideChildren"></i>
+							<i fd-list-icon glyph="navigation-right-arrow" *ngIf="!!item.isHideChildren"></i>
+						}
+					</li>
+					@for (child of item.children; track $index) {
+						<li
+							*ngIf="!item.isHideChildren"
+							fd-list-item
+							(click)="onListClicked(child)"
+							[unread]="child.type === 'folder'"
+							ngClass="{{ child.type === 'folder' ? 'folder-item' : 'file-item' }}"
+						>
+							<span fd-list-title class="sub-file-item"> {{ child.title }} </span>
+							<i fd-list-icon glyph="navigation-right-arrow" *ngIf="child.type === 'folder'"></i>
+						</li>
+					}
+				}
+			</ul>
+		</div>
+	</ng-template>
+	<ng-template #midColumn>
+		<div class="expanded-page">
+			<button
+				class="expanded-page-close-button"
+				fd-button
+				fdType="transparent"
+				glyph="decline"
+				ariaLabel="decline Transparent"
+				title="Close"
+				(click)="onListClicked()"
+			></button>
+			<markdown class="expanded-page" lineNumbers [start]="0" [src]="currentDocPath"> </markdown>
+		</div>
+	</ng-template>
+</fd-flexible-column-layout>

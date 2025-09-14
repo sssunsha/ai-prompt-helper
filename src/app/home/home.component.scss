@@ -1,0 +1,94 @@
+@import '../../base.scss';
+
+:host {
+	width: 100vw;
+	height: 100vh;
+	display: block;
+	overflow: hidden;
+	.avatar {
+		width: 45px;
+		border-radius: 20px;
+	}
+	.content {
+		display: flex;
+		flex-direction: row;
+		&-title {
+			margin: 0 auto;
+		}
+		&-menu {
+			margin-left: 20px;
+		}
+	}
+
+	.busy-indicator {
+		text-align: center;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+	}
+
+	.bottom-bar {
+		width: 100%;
+		position: absolute;
+		bottom: 0;
+		::ng-deep {
+			.fd-shellbar__group {
+				height: 50px;
+			}
+		}
+	}
+	iframe {
+		height: 100vh;
+		width: 100%;
+	}
+}
+
+::ng-deep {
+	.fd-menu__link {
+		min-width: 100px;
+	}
+	body {
+		margin: 0px;
+	}
+	.ai-model-select {
+		&-desktop {
+			display: none;
+		}
+		&-mobile {
+			position: absolute;
+			width: 200px;
+			right: 5px;
+			display: block !important;
+		}
+	}
+	@include desktop() {
+		fd-tab {
+			max-height: calc(100vh - 92px);
+			overflow: hidden;
+		}
+		.ai-model-select {
+			&-desktop {
+				display: block;
+			}
+			&-mobile {
+				display: none !important;
+			}
+		}
+
+		fd-dynamic-page-global-actions {
+			visibility: visible;
+		}
+
+		fd-tab-list {
+			.fd-tabs {
+				display: unset;
+			}
+		}
+	}
+
+	@include mobile() {
+		fd-dynamic-page-global-actions {
+			visibility: hidden;
+		}
+	}
+}
