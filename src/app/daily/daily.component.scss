@@ -1,0 +1,8 @@
+@import '../../base.scss';
+
+:host {
+	.card {
+		min-height: 20rem;
+		background-color: var(--sapBaseColor);
+	}
+}

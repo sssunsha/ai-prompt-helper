@@ -17,6 +17,7 @@ import { PromptSampleComponent } from './prompt-generator/prompt-sample/prompt-s
 import { ReferenceDocumentComponent } from './reference-document/reference-document.component';
 import { PromptAdvancedSettingComponent } from './prompt-generator/prompt-advanced-setting/prompt-advanced-setting.component';
 import { ToolsComponent } from './tools/tools.component';
+import { DailyComponent } from './daily/daily.component';
 
 @NgModule({
 	declarations: [
@@ -28,6 +29,7 @@ import { ToolsComponent } from './tools/tools.component';
 		ReferenceDocumentComponent,
 		PromptAdvancedSettingComponent,
 		ToolsComponent,
+		DailyComponent,
 	],
 	imports: [BrowserModule, HttpClientModule, FundamentalNgxCoreModule, MarkdownModule.forRoot(), FormsModule],
 	providers: [],
