@@ -48,6 +48,14 @@
 			border: 0;
 		}
 	}
+
+	.date {
+		position: fixed;
+		color: var(--sapTextColor);
+		top: 50px;
+		right: 15px;
+		font-family: '72';
+	}
 }
 
 ::ng-deep {

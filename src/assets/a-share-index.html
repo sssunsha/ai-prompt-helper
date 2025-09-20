@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>A股指数实时行情</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+		<!-- Tailwind 配置 -->
+		<script>
+			tailwind.config = {
+				theme: {
+					extend: {
+						colors: {
+							primary: '#1e3a8a',
+							secondary: '#3b82f6',
+							rise: '#e53e3e', // 上涨红色
+							fall: '#10b981', // 下跌绿色
+							neutral: '#64748b', // 平盘灰色
+						},
+						fontFamily: {
+							sans: ['Inter', 'system-ui', 'sans-serif'],
+						},
+					},
+				},
+			};
+		</script>
+
+		<style type="text/tailwindcss">
+			@layer utilities {
+				.index-card {
+					@apply bg-white rounded-lg shadow-md p-4 transition-all duration-300 hover:shadow-lg;
+				}
+				.index-title {
+					@apply text-lg font-semibold text-gray-800 mb-2;
+				}
+				.index-value {
+					@apply text-2xl font-bold mb-1;
+				}
+				.change-positive {
+					@apply text-rise;
+				}
+				.change-negative {
+					@apply text-fall;
+				}
+				.change-neutral {
+					@apply text-neutral;
+				}
+				.update-time {
+					@apply text-xs text-gray-500 mt-2;
+				}
+				.loading-indicator {
+					@apply animate-pulse text-gray-400;
+				}
+				.error-message {
+					@apply text-amber-600 text-sm;
+				}
+			}
+		</style>
+	</head>
+	<body class="bg-[#29313a] p-0 m-0">
+		<div class="container mx-auto p-3 max-w-3xl">
+			<div class="flex justify-between items-center mb-3">
+				<h1 class="text-xl font-bold text-white flex items-center">
+					<i class="fa fa-line-chart mr-2"></i>A股主要指数
+				</h1>
+				<span id="market-status" class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">
+					<i class="fa fa-circle text-green-500 text-[8px] mr-1"></i>交易中
+				</span>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+				<!-- 上证指数 -->
+				<div class="index-card" id="sse-index">
+					<div class="index-title flex justify-between">
+						<span>上证指数</span>
+						<span class="text-sm font-normal text-gray-500">000001</span>
+					</div>
+					<div class="index-value" id="sse-value">
+						<i class="fa fa-spinner loading-indicator"></i>
+					</div>
+					<div class="flex items-center">
+						<span id="sse-change" class="change-neutral">-</span>
+						<span class="ml-2" id="sse-percent" class="change-neutral">-</span>
+					</div>
+					<div class="update-time" id="sse-time">加载中...</div>
+				</div>
+
+				<!-- 深圳成指 -->
+				<div class="index-card" id="szse-index">
+					<div class="index-title flex justify-between">
+						<span>深圳成指</span>
+						<span class="text-sm font-normal text-gray-500">399001</span>
+					</div>
+					<div class="index-value" id="szse-value">
+						<i class="fa fa-spinner loading-indicator"></i>
+					</div>
+					<div class="flex items-center">
+						<span id="szse-change" class="change-neutral">-</span>
+						<span class="ml-2" id="szse-percent" class="change-neutral">-</span>
+					</div>
+					<div class="update-time" id="szse-time">加载中...</div>
+				</div>
+
+				<!-- 创业板指 -->
+				<div class="index-card" id="gem-index">
+					<div class="index-title flex justify-between">
+						<span>创业板指</span>
+						<span class="text-sm font-normal text-gray-500">399006</span>
+					</div>
+					<div class="index-value" id="gem-value">
+						<i class="fa fa-spinner loading-indicator"></i>
+					</div>
+					<div class="flex items-center">
+						<span id="gem-change" class="change-neutral">-</span>
+						<span class="ml-2" id="gem-percent" class="change-neutral">-</span>
+					</div>
+					<div class="update-time" id="gem-time">加载中...</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			// 指数数据模型 - 包含腾讯财经API代码映射
+			const indexData = {
+				sse: {
+					name: '上证指数',
+					code: '000001',
+					apiCode: 'sh000001', // 腾讯财经API代码
+					elementPrefix: 'sse',
+					lastData: null, // 用于存储最后一次成功获取的数据
+				},
+				szse: {
+					name: '深圳成指',
+					code: '399001',
+					apiCode: 'sz399001', // 腾讯财经API代码
+					elementPrefix: 'szse',
+					lastData: null,
+				},
+				gem: {
+					name: '创业板指',
+					code: '399006',
+					apiCode: 'sz399006', // 腾讯财经API代码
+					elementPrefix: 'gem',
+					lastData: null,
+				},
+			};
+
+			// 更新指数显示
+			function updateIndexDisplay(index, data) {
+				const prefix = index.elementPrefix;
+
+				// 获取DOM元素
+				const valueEl = document.getElementById(`${prefix}-value`);
+				const changeEl = document.getElementById(`${prefix}-change`);
+				const percentEl = document.getElementById(`${prefix}-percent`);
+				const timeEl = document.getElementById(`${prefix}-time`);
+
+				// 清除加载状态和错误状态
+				valueEl.innerHTML = '';
+				valueEl.classList.remove('error-message');
+
+				// 保存最新数据
+				index.lastData = data;
+
+				// 更新数值
+				valueEl.textContent = parseFloat(data.price).toLocaleString(undefined, {
+					minimumFractionDigits: 2,
+					maximumFractionDigits: 2,
+				});
+
+				// 更新涨跌额和百分比，并设置颜色类
+				changeEl.textContent = (data.change >= 0 ? '+' : '') + parseFloat(data.change).toFixed(2);
+				percentEl.textContent = (data.percent >= 0 ? '+' : '') + parseFloat(data.percent).toFixed(2) + '%';
+
+				// 移除所有颜色类
+				changeEl.classList.remove('change-positive', 'change-negative', 'change-neutral');
+				percentEl.classList.remove('change-positive', 'change-negative', 'change-neutral');
+
+				// 添加正确的颜色类
+				if (parseFloat(data.change) > 0) {
+					changeEl.classList.add('change-positive');
+					percentEl.classList.add('change-positive');
+				} else if (parseFloat(data.change) < 0) {
+					changeEl.classList.add('change-negative');
+					percentEl.classList.add('change-negative');
+				} else {
+					changeEl.classList.add('change-neutral');
+					percentEl.classList.add('change-neutral');
+				}
+
+				// 更新时间
+				timeEl.textContent = `更新于 ${data.time}`;
+
+				// 添加数值变化动画
+				valueEl.classList.add('scale-105');
+				setTimeout(() => {
+					valueEl.classList.remove('scale-105');
+				}, 300);
+			}
+
+			// 显示错误信息，但保留最后一次成功的数据
+			function showError(index) {
+				const prefix = index.elementPrefix;
+				const timeEl = document.getElementById(`${prefix}-time`);
+
+				timeEl.textContent = `更新失败，显示最后数据`;
+
+				// 如果有历史数据，确保显示的是历史数据
+				if (index.lastData) {
+					updateIndexDisplay(index, index.lastData);
+				} else {
+					const valueEl = document.getElementById(`${prefix}-value`);
+					valueEl.innerHTML = '<i class="fa fa-exclamation-triangle"></i> 数据加载失败';
+					valueEl.classList.add('error-message');
+				}
+			}
+
+			// 从腾讯财经API获取单个指数数据
+			async function fetchSingleIndex(index) {
+				try {
+					// 腾讯财经的接口，支持JSONP
+					return new Promise((resolve, reject) => {
+						// 创建唯一的回调函数名
+						const callbackName = `tencent_quote_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
+
+						// 创建script标签
+						const script = document.createElement('script');
+						script.type = 'text/javascript';
+						script.src = `https://qt.gtimg.cn/q=${index.apiCode}&callback=${callbackName}`;
+
+						// 定义回调函数
+						window[callbackName] = function (data) {
+							// 清除回调函数和script标签
+							delete window[callbackName];
+							document.head.removeChild(script);
+
+							if (data && typeof data === 'string') {
+								// 解析返回的数据
+								// 格式示例：v_sh000001="1~上证指数~3248.63~12.35~0.38~3236.28~3251.45~3235.12~123456789~1234567~0.00~0~0~0~0~0~2023-10-13 15:00:00~0.00~0~0~0~0~";
+								const match = data.match(/v_\w+="([^"]+)"/);
+								if (match && match[1]) {
+									const parts = match[1].split('~');
+
+									// 解析数据
+									const result = {
+										name: parts[1],
+										price: parts[2], // 当前价
+										change: parts[3], // 涨跌额
+										percent: parts[4], // 涨跌幅(%)
+										open: parts[5], // 开盘价
+										high: parts[6], // 最高价
+										low: parts[7], // 最低价
+										time: parts[30], // 时间
+									};
+
+									resolve(result);
+									return;
+								}
+							}
+
+							reject(new Error('数据格式不正确'));
+						};
+
+						// 超时处理
+						setTimeout(() => {
+							delete window[callbackName];
+							document.head.removeChild(script);
+							reject(new Error('请求超时'));
+						}, 5000);
+
+						// 添加script标签到页面
+						document.head.appendChild(script);
+					});
+				} catch (error) {
+					console.error(`获取${index.name}数据出错:`, error);
+					throw error;
+				}
+			}
+
+			// 批量获取所有指数数据
+			async function fetchAllIndexes() {
+				// 逐个获取指数数据，避免请求过于集中
+				for (const index of Object.values(indexData)) {
+					try {
+						const data = await fetchSingleIndex(index);
+						updateIndexDisplay(index, data);
+					} catch (error) {
+						console.error(`获取${index.name}数据失败`, error);
+						showError(index);
+					}
+
+					// 每个请求之间间隔一点时间
+					await new Promise(resolve => setTimeout(resolve, 500));
+				}
+			}
+
+			// 格式化时间显示
+			function formatTime(timeStr) {
+				if (!timeStr) return new Date().toLocaleTimeString();
+				return timeStr;
+			}
+
+			// 检查市场状态并更新显示
+			function updateMarketStatus() {
+				const now = new Date();
+				const day = now.getDay();
+				const hours = now.getHours();
+				const minutes = now.getMinutes();
+
+				// 周一至周五 9:30-11:30, 13:00-15:00 为交易时间
+				let isTrading = false;
+
+				if (day >= 1 && day <= 5) {
+					// 周一到周五
+					const morningTrading =
+						(hours === 9 && minutes >= 30) || (hours > 9 && hours < 11) || (hours === 11 && minutes <= 30);
+					const afternoonTrading =
+						(hours === 13 && minutes >= 0) || (hours > 13 && hours < 15) || (hours === 15 && minutes === 0);
+
+					isTrading = morningTrading || afternoonTrading;
+				}
+
+				const statusEl = document.getElementById('market-status');
+				if (isTrading) {
+					statusEl.innerHTML = '<i class="fa fa-circle text-green-500 text-[8px] mr-1"></i>交易中';
+					statusEl.className = 'px-2 py-1 text-xs rounded-full bg-green-100 text-green-800';
+					return true;
+				} else {
+					statusEl.innerHTML = '<i class="fa fa-circle text-gray-500 text-[8px] mr-1"></i>休市中';
+					statusEl.className = 'px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800';
+					return false;
+				}
+			}
+
+			// 定时更新数据
+			function startUpdates() {
+				// 立即获取一次数据
+				fetchAllIndexes();
+
+				// 设置定时更新
+				setInterval(() => {
+					const isTrading = updateMarketStatus();
+					// 交易时间每30秒更新一次，休市时间每5分钟更新一次
+					if (isTrading) {
+						fetchAllIndexes();
+					} else {
+						// 每5分钟检查一次
+						const now = new Date();
+						if (now.getMinutes() % 5 === 0) {
+							fetchAllIndexes();
+						}
+					}
+				}, 30000); // 基础间隔30秒
+
+				// 初始检查市场状态
+				updateMarketStatus();
+			}
+
+			// 页面加载完成后开始更新
+			window.addEventListener('load', startUpdates);
+
+			// 允许父窗口调整iframe高度
+			function sendHeightToParent() {
+				if (window.parent && window.parent.postMessage) {
+					const height = document.body.scrollHeight;
+					window.parent.postMessage(
+						{
+							type: 'setIframeHeight',
+							height: height,
+						},
+						'*'
+					);
+				}
+			}
+
+			// 页面加载和尺寸变化时通知父窗口
+			window.addEventListener('load', sendHeightToParent);
+			window.addEventListener('resize', sendHeightToParent);
+		</script>
+	</body>
+</html>

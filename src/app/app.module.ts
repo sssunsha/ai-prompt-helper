@@ -6,7 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { HttpClientModule } from '@angular/common/http';
 import { MarkdownModule } from 'ngx-markdown';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FundamentalNgxCoreModule } from '@fundamental-ngx/core';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -18,6 +18,7 @@ import { ReferenceDocumentComponent } from './reference-document/reference-docum
 import { PromptAdvancedSettingComponent } from './prompt-generator/prompt-advanced-setting/prompt-advanced-setting.component';
 import { ToolsComponent } from './tools/tools.component';
 import { DailyComponent } from './daily/daily.component';
+import { PomodoroTimerComponent } from './daily/pomodoro-timer/pomodoro-timer.component';
 
 @NgModule({
 	declarations: [
@@ -30,8 +31,16 @@ import { DailyComponent } from './daily/daily.component';
 		PromptAdvancedSettingComponent,
 		ToolsComponent,
 		DailyComponent,
+		PomodoroTimerComponent,
 	],
-	imports: [BrowserModule, HttpClientModule, FundamentalNgxCoreModule, MarkdownModule.forRoot(), FormsModule],
+	imports: [
+		BrowserModule,
+		HttpClientModule,
+		FundamentalNgxCoreModule,
+		MarkdownModule.forRoot(),
+		FormsModule,
+		ReactiveFormsModule,
+	],
 	providers: [],
 	bootstrap: [AppComponent],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],

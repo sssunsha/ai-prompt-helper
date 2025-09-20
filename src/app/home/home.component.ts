@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
 	private readonly _onDestroy$: Subject<void> = new Subject<void>();
 	highlightJsThemeCss: SafeResourceUrl | undefined;
 	themes: CompleteThemeDefinition[] = [];
+	currentDate: Date = new Date();
 
 	constructor(
 		public service: AppService,
