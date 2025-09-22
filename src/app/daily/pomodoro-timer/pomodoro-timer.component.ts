@@ -1,6 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Subscription, interval } from 'rxjs';
+
+export interface PomodoroTimerData {
+	isRunning: boolean;
+	minutes: number;
+	seconds: number;
+	currentMode: 'work' | 'shortBreak' | 'longBreak';
+	completedCycles: number;
+	workMinutes: number;
+	shortBreakMinutes: number;
+	longBreakMinutes: number;
+}
 
 @Component({
 	selector: 'app-pomodoro-timer',
@@ -91,7 +102,6 @@ import { Subscription, interval } from 'rxjs';
 				max-width: 600px;
 				margin: 2rem auto;
 				padding: 2rem;
-				background-color: #f8f9fa;
 				border-radius: 10px;
 				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 			}
@@ -120,12 +130,12 @@ import { Subscription, interval } from 'rxjs';
 			.timer-display {
 				padding: 2rem;
 				background-color: white;
+				background-color: var(--fd-background-color, black);
 				border-radius: 8px;
 				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 			}
 
 			.time {
-				color: #2c3e50;
 			}
 
 			.cycles {
@@ -166,7 +176,7 @@ import { Subscription, interval } from 'rxjs';
 			}
 
 			.settings {
-				background-color: #ecf0f1;
+				background-color: black;
 			}
 
 			.settings-grid {
@@ -202,6 +212,8 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 	shortBreakMinutes = new FormControl(5);
 	longBreakMinutes = new FormControl(15);
 
+	private readonly STORAGE_KEY = 'pomodoro-timer';
+
 	// 计时器订阅
 	private timerSubscription?: Subscription;
 
@@ -212,6 +224,7 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 				this.minutes = value;
 				this.seconds = 0;
 			}
+			this.syncToStorage();
 		});
 
 		this.shortBreakMinutes.valueChanges.subscribe(value => {
@@ -219,6 +232,7 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 				this.minutes = value;
 				this.seconds = 0;
 			}
+			this.syncToStorage();
 		});
 
 		this.longBreakMinutes.valueChanges.subscribe(value => {
@@ -226,7 +240,11 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 				this.minutes = value;
 				this.seconds = 0;
 			}
+			this.syncToStorage();
 		});
+
+		// load from storage to init the config and running data
+		this.loadFromStorage();
 	}
 
 	// 切换模式
@@ -247,6 +265,7 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 		}
 
 		this.seconds = 0;
+		this.syncToStorage();
 	}
 
 	// 开始计时器
@@ -257,6 +276,7 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 				this.tick();
 			});
 		}
+		this.syncToStorage();
 	}
 
 	// 暂停计时器
@@ -265,12 +285,52 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 			this.timerSubscription.unsubscribe();
 			this.isRunning = false;
 		}
+		this.syncToStorage();
 	}
 
 	// 重置计时器
 	resetTimer() {
 		this.pauseTimer();
 		this.switchMode(this.currentMode); // 重置为当前模式的初始时间
+		this.syncToStorage();
+	}
+
+	private restartTimer(): void {
+		if (this.isRunning) {
+			this.timerSubscription = interval(1000).subscribe(() => {
+				this.tick();
+			});
+		}
+	}
+
+	private syncToStorage(): void {
+		const data: PomodoroTimerData = {
+			isRunning: this.isRunning,
+			minutes: this.minutes,
+			seconds: this.seconds,
+			currentMode: this.currentMode,
+			completedCycles: this.completedCycles,
+			workMinutes: this.workMinutes.value || 25,
+			shortBreakMinutes: this.shortBreakMinutes.value || 5,
+			longBreakMinutes: this.longBreakMinutes.value || 15,
+		};
+		localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+	}
+
+	private loadFromStorage(): void {
+		const data = localStorage.getItem(this.STORAGE_KEY);
+		if (data) {
+			const parsedData = JSON.parse(data);
+			this.isRunning = parsedData.isRunning;
+			this.minutes = parsedData.minutes;
+			this.seconds = parsedData.seconds;
+			this.currentMode = parsedData.currentMode;
+			this.completedCycles = parsedData.completedCycles;
+			this.workMinutes.setValue(parsedData.workMinutes);
+			this.shortBreakMinutes.setValue(parsedData.shortBreakMinutes);
+			this.longBreakMinutes.setValue(parsedData.longBreakMinutes);
+			this.restartTimer();
+		}
 	}
 
 	// 计时逻辑
@@ -286,6 +346,7 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 		} else {
 			this.seconds--;
 		}
+		this.syncToStorage();
 	}
 
 	// 完成当前时段
@@ -305,6 +366,7 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 			// 休息结束后回到工作模式
 			this.switchMode('work');
 		}
+		this.syncToStorage();
 	}
 
 	// 播放提示音
