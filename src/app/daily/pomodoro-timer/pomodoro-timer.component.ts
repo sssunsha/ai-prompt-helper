@@ -24,7 +24,7 @@ export interface PomodoroTimerData {
 				<button
 					[class.active]="currentMode === 'work'"
 					[class.btn-primary]="currentMode !== 'work'"
-					class="mode-btn mx-2 px-4 py-2 rounded-lg"
+					class="mode-btn mx-2 px-4 py-2 rounded-lg reset-btn"
 					(click)="switchMode('work')"
 				>
 					工作
