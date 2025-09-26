@@ -353,6 +353,7 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 	private completeCurrentSession() {
 		this.pauseTimer();
 		this.playNotificationSound();
+		this.alert();
 
 		if (this.currentMode === 'work') {
 			this.completedCycles++;
@@ -367,6 +368,10 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 			this.switchMode('work');
 		}
 		this.syncToStorage();
+	}
+
+	private alert() {
+		window.alert('Time is up for ' + this.currentMode + ' !');
 	}
 
 	// 播放提示音
