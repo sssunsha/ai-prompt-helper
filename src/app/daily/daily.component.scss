@@ -1,8 +1,11 @@
 @import '../../base.scss';
 
 :host {
+	fd-layout-grid {
+		padding: 1rem;
+	}
 	.card {
-		min-height: 2rem;
+		min-height: 700px;
 		background-color: var(--sapBaseColor);
 	}
 }

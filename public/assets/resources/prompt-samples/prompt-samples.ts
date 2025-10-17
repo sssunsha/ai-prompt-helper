@@ -2,6 +2,7 @@ import { PromptListGroup, PromptListItem } from 'src/app/prompt-generator/prompt
 import { rolePrompts } from './roles';
 import { generalPersonalPrompts } from './general/general-personals';
 import { readABookPrompts } from './read-a-book';
+import { financialPrompts } from './financial';
 
 export const promptSamples: Array<PromptListGroup> = [
 	{
@@ -15,5 +16,9 @@ export const promptSamples: Array<PromptListGroup> = [
 	{
 		title: '读书',
 		items: readABookPrompts,
+	},
+	{
+		title: '金融',
+		items: financialPrompts,
 	},
 ];
