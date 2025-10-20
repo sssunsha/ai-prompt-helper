@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subscription, interval } from 'rxjs';
 
@@ -11,6 +11,7 @@ export interface PomodoroTimerData {
 	workMinutes: number;
 	shortBreakMinutes: number;
 	longBreakMinutes: number;
+	currentDate: string;
 }
 
 @Component({
@@ -45,6 +46,7 @@ export interface PomodoroTimerData {
 				>
 					长休息
 				</button>
+				<button id="alert-dialog-btn" command="show-modal" commandfor="dialog">Open dialog</button>
 			</div>
 
 			<!-- 计时器显示 -->
@@ -54,6 +56,71 @@ export interface PomodoroTimerData {
 				</div>
 				<div class="cycles">已完成: {{ completedCycles }} 个番茄</div>
 			</div>
+			<!-- alert dialog -->
+			<el-dialog>
+				<dialog
+					id="dialog"
+					aria-labelledby="dialog-title"
+					class="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent"
+				>
+					<el-dialog-backdrop
+						class="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
+					></el-dialog-backdrop>
+
+					<div
+						tabindex="0"
+						class="flex min-h-full items-end justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0"
+					>
+						<el-dialog-panel
+							class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+						>
+							<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+								<div class="sm:flex sm:items-start">
+									<div
+										class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10"
+									>
+										<svg
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="1.5"
+											data-slot="icon"
+											aria-hidden="true"
+											class="size-6 text-red-600"
+										>
+											<path
+												d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+										</svg>
+									</div>
+									<div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+										<h3 id="dialog-title" class="text-base font-semibold text-gray-900">
+											Time is up !
+										</h3>
+										<div class="mt-2">
+											<p class="text-sm text-gray-500">
+												Time is up! You can take a break now or start to wok agian!
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+								<button
+									type="button"
+									command="close"
+									commandfor="dialog"
+									class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 sm:ml-3 sm:w-auto"
+								>
+									&nbsp;&nbsp;&nbsp;&nbsp;Ok&nbsp;&nbsp;&nbsp;&nbsp;
+								</button>
+							</div>
+						</el-dialog-panel>
+					</div>
+				</dialog>
+			</el-dialog>
 
 			<!-- 控制按钮 -->
 			<div class="controls flex justify-center gap-4 mb-8">
@@ -198,13 +265,14 @@ export interface PomodoroTimerData {
 		`,
 	],
 })
-export class PomodoroTimerComponent implements OnInit, OnDestroy {
+export class PomodoroTimerComponent implements OnInit, AfterViewInit, OnDestroy {
 	// 计时器状态
 	currentMode: 'work' | 'shortBreak' | 'longBreak' = 'work';
 	minutes: number = 25;
 	seconds: number = 0;
 	isRunning: boolean = false;
 	completedCycles: number = 0;
+	currentDate = this.generateCurrentDate();
 
 	// 时间设置
 	workMinutes = new FormControl(25);
@@ -212,6 +280,8 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 	longBreakMinutes = new FormControl(15);
 
 	private readonly STORAGE_KEY = 'pomodoro-timer';
+
+	private alertDialogBtn = document.getElementById('alert-dialog-btn');
 
 	// 计时器订阅
 	private timerSubscription?: Subscription;
@@ -244,6 +314,10 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 
 		// load from storage to init the config and running data
 		this.loadFromStorage();
+	}
+
+	ngAfterViewInit(): void {
+		this.alertDialogBtn = document.getElementById('alert-dialog-btn');
 	}
 
 	// 切换模式
@@ -292,6 +366,7 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 		this.pauseTimer();
 		this.switchMode(this.currentMode); // 重置为当前模式的初始时间
 		this.syncToStorage();
+		this.alertDialogBtn?.click();
 	}
 
 	private restartTimer(): void {
@@ -300,6 +375,11 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 				this.tick();
 			});
 		}
+	}
+
+	private generateCurrentDate(): string {
+		const d = new Date();
+		return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
 	}
 
 	private syncToStorage(): void {
@@ -312,6 +392,7 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 			workMinutes: this.workMinutes.value || 25,
 			shortBreakMinutes: this.shortBreakMinutes.value || 5,
 			longBreakMinutes: this.longBreakMinutes.value || 15,
+			currentDate: this.currentDate,
 		};
 		localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
 	}
@@ -324,10 +405,14 @@ export class PomodoroTimerComponent implements OnInit, OnDestroy {
 			this.minutes = parsedData.minutes;
 			this.seconds = parsedData.seconds;
 			this.currentMode = parsedData.currentMode;
-			this.completedCycles = parsedData.completedCycles;
 			this.workMinutes.setValue(parsedData.workMinutes);
 			this.shortBreakMinutes.setValue(parsedData.shortBreakMinutes);
 			this.longBreakMinutes.setValue(parsedData.longBreakMinutes);
+			if (this.currentDate !== parsedData.currentDate) {
+				this.completedCycles = 0;
+			} else {
+				this.completedCycles = parsedData.completedCycles;
+			}
 			this.restartTimer();
 		}
 	}

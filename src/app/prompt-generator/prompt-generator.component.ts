@@ -40,6 +40,10 @@ export class PromptGeneratorComponent implements OnInit, OnDestroy {
 		this.service.go();
 	}
 
+	copy(): void {
+		this.service.copy();
+	}
+
 	clean(): void {
 		this.service.reset();
 	}

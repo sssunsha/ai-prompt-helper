@@ -33,50 +33,59 @@
 			</fd-tab-list>
 		</div>
 		@if (!service.isMobileMode) {
-		<div [fdLayoutGridCol]="12" [colLg]="6" class="prompt-result">
-			<div class="ai-model-select-desktop">
-				<fd-form-group [isInline]="true">
-					<div fd-form-item>
-						<fd-radio-button [value]="0" [id]="'radio-1'" name="Kimi" [(ngModel)]="service.aiModel"
-							>Kimi
-						</fd-radio-button>
-					</div>
-					<div fd-form-item>
-						<fd-radio-button [value]="1" [id]="'radio-2'" name="TenXunYuanBao" [(ngModel)]="service.aiModel"
-							>腾讯元宝
-						</fd-radio-button>
-					</div>
-					<div fd-form-item>
-						<fd-radio-button [value]="6" [id]="'radio-7'" name="DeepSeek" [(ngModel)]="service.aiModel">
-							DeepSeek
-						</fd-radio-button>
-					</div>
-					<div fd-form-item>
-						<fd-radio-button [value]="2" [id]="'radio-3'" name="DouBao" [(ngModel)]="service.aiModel">
-							豆包
-						</fd-radio-button>
-					</div>
-					<div fd-form-item>
-						<fd-radio-button [value]="3" [id]="'radio-4'" name="QianWen" [(ngModel)]="service.aiModel">
-							通义千问
-						</fd-radio-button>
-					</div>
-					<div fd-form-item>
-						<fd-radio-button [value]="4" [id]="'radio-5'" name="WenYan" [(ngModel)]="service.aiModel">
-							文言一心
-						</fd-radio-button>
-					</div>
-					<div fd-form-item>
-						<fd-radio-button [value]="5" [id]="'radio-6'" name="MiTaSouSuo" [(ngModel)]="service.aiModel">
-							秘塔AI搜索
-						</fd-radio-button>
-					</div>
-					<button fd-button label="Go" fdCozy (click)="go()" fdType="emphasized"></button>
-				</fd-form-group>
-			</div>
+			<div [fdLayoutGridCol]="12" [colLg]="6" class="prompt-result">
+				<div class="ai-model-select-desktop">
+					<fd-form-group [isInline]="true">
+						<div fd-form-item>
+							<fd-radio-button [value]="0" [id]="'radio-1'" name="Kimi" [(ngModel)]="service.aiModel"
+								>Kimi
+							</fd-radio-button>
+						</div>
+						<div fd-form-item>
+							<fd-radio-button
+								[value]="1"
+								[id]="'radio-2'"
+								name="TenXunYuanBao"
+								[(ngModel)]="service.aiModel"
+								>腾讯元宝
+							</fd-radio-button>
+						</div>
+						<div fd-form-item>
+							<fd-radio-button [value]="6" [id]="'radio-7'" name="DeepSeek" [(ngModel)]="service.aiModel">
+								DeepSeek
+							</fd-radio-button>
+						</div>
+						<div fd-form-item>
+							<fd-radio-button [value]="2" [id]="'radio-3'" name="DouBao" [(ngModel)]="service.aiModel">
+								豆包
+							</fd-radio-button>
+						</div>
+						<div fd-form-item>
+							<fd-radio-button [value]="3" [id]="'radio-4'" name="QianWen" [(ngModel)]="service.aiModel">
+								通义千问
+							</fd-radio-button>
+						</div>
+						<div fd-form-item>
+							<fd-radio-button [value]="4" [id]="'radio-5'" name="WenYan" [(ngModel)]="service.aiModel">
+								文言一心
+							</fd-radio-button>
+						</div>
+						<div fd-form-item>
+							<fd-radio-button
+								[value]="5"
+								[id]="'radio-6'"
+								name="MiTaSouSuo"
+								[(ngModel)]="service.aiModel"
+							>
+								秘塔AI搜索
+							</fd-radio-button>
+						</div>
+						<button fd-button label="Go" fdCozy (click)="go()" fdType="emphasized"></button>
+					</fd-form-group>
+				</div>
 
-			<ng-container *ngTemplateOutlet="promptResult"></ng-container>
-		</div>
+				<ng-container *ngTemplateOutlet="promptResult"></ng-container>
+			</div>
 		}
 	</div>
 </fd-layout-grid>
@@ -90,7 +99,7 @@
 			(valueChange)="handleQuestionTemplateChange($event)"
 		>
 			@for (option of service.questionTemplateOptions; track option) {
-			<li fd-option [value]="option" [title]="option.description">{{ option.title }}</li>
+				<li fd-option [value]="option" [title]="option.description">{{ option.title }}</li>
 			}
 		</fd-select>
 		<textarea
@@ -117,8 +126,16 @@
 		</div>
 		<br />
 		<div class="action-buttons">
-			<button fd-button label="Clean" fdCozy (click)="clean()" fdType="ghost"></button>
-			<button fd-button label="Go" fdCozy (click)="go()" fdType="emphasized"></button>
+			<button fd-button label="&nbsp;&nbsp;Copy&nbsp;&nbsp;" fdCozy (click)="copy()" fdType="positive"></button>
+			<button fd-button label="&nbsp;&nbsp;Clean&nbsp;&nbsp;" fdCozy (click)="clean()" fdType="ghost"></button>
+			<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+			<button
+				fd-button
+				label="&nbsp;&nbsp;&nbsp;&nbsp;Go&nbsp;&nbsp;&nbsp;&nbsp;"
+				fdCozy
+				(click)="go()"
+				fdType="emphasized"
+			></button>
 		</div>
 	</div>
 </ng-template>
