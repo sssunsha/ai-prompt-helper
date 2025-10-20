@@ -4,7 +4,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { AIModelConfig } from '../prompt-generator/prompt-generator.model';
 import { CompleteThemeDefinition, ThemingService } from '@fundamental-ngx/core';
-import { takeUntil, filter, Subject } from 'rxjs';
+import { takeUntil, filter, Subject, fromEvent } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AppService } from '../app.service';
 const urlContains = (themeName: string, search: string): boolean => themeName.toLowerCase().includes(search);
@@ -38,6 +38,15 @@ export class HomeComponent implements OnInit {
 			.subscribe(theme => {
 				this.updateHighlightTheme(theme?.id as string);
 			});
+
+		fromEvent(document, 'visibilitychange').subscribe(e => {
+			if (document.visibilityState === 'visible') {
+				const iframe = document.getElementById('clock') as HTMLIFrameElement;
+				if (iframe.contentWindow) {
+					iframe.contentWindow.location.reload();
+				}
+			}
+		});
 	}
 
 	get aiModelList(): Array<AIModelConfig> {
