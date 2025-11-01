@@ -56,12 +56,12 @@
 		::ng-deep {
 			.orignal-question {
 				span {
-					color: var(--sapAvatar_6_BorderColor);
+					color: var(--apAvatar_6_TextColor);
 				}
 			}
 			.after-enhancement {
 				span {
-					color: var(--sapAvatar_8_Background);
+					color: var(--sapField_WarningColor);
 				}
 			}
 		}
