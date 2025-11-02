@@ -1,0 +1,54 @@
+[
+	{
+		"title": "AI Reference links",
+		"children": [
+			{
+				"title": "Chat AI",
+				"url": "http://openai.cha-tai.cn/?hometype=chat"
+			},
+			{
+				"title": "AI神器大全",
+				"url": "https://aishenqi.net/?utm_source=bigezhang.com"
+			}
+		]
+	},
+	{
+		"title": "我的AI工具",
+		"children": [
+			{
+				"title": "Moly 控制台",
+				"url": "https://xiaozhi.me/",
+				"shortTitle": "Moly"
+			},
+			{
+				"title": "语鲸",
+				"url": "https://lingowhale.com/home"
+			}
+		]
+	},
+	{
+		"title": "马修学习辅助",
+		"children": [
+			{
+				"title": "PhET 科学教育资源网址大全",
+				"url": "https://phet.colorado.edu/",
+				"shortTitle": "PhET"
+			}
+		]
+	},
+	{
+		"title": "前端技术收藏",
+		"children": [
+			{
+				"title": "daisy UI 库",
+				"shortTitle": "daisy UI",
+				"url": "https://daisyui.com/"
+			},
+			{
+				"title": "Tailwind CSS",
+				"shortTitle": "tailwindcss",
+				"url": "https://tailwindcss.com/"
+			}
+		]
+	}
+]

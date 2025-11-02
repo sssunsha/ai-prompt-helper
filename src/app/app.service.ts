@@ -18,6 +18,7 @@ import {
 	QuestionTemaplteOption,
 } from './prompt-generator/prompt-generator.model';
 import { Note } from './app.model';
+import { BookmarkGroup } from './reference-document/reference-document.model';
 
 @Injectable({
 	providedIn: 'root',
@@ -40,6 +41,7 @@ export class AppService {
 	public questionTemplateOptions = defaultQuestionTemaplteOption;
 	public selectedQuestionTemplate: QuestionTemaplteOption | undefined;
 	public noteList: Array<Note> = [];
+	public bookmarkGroups: Array<BookmarkGroup> = [];
 
 	constructor(
 		private clipboard: Clipboard,
@@ -49,7 +51,7 @@ export class AppService {
 		this.promptContentChangedSubject
 			.pipe(filter(type => type === EPromptContentChangedType.RESULT))
 			.subscribe(() => this.updateAfterEnhancement());
-		this.initNoteList();
+		this.initData();
 	}
 
 	go(): void {
@@ -84,12 +86,15 @@ export class AppService {
 		return this.screenWidth <= 1024;
 	}
 
-	private initNoteList(): void {
+	private initData(): void {
 		this.http.get('./assets/data.json').subscribe(data => {
 			if (data) {
 				this.noteList = [];
 				this.parseNoteList(data);
 			}
+		});
+		this.http.get<Array<BookmarkGroup>>('./assets/resources/references/bookmarks.json').subscribe(data => {
+			this.bookmarkGroups = data;
 		});
 	}
 
