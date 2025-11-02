@@ -42,6 +42,7 @@ export class AppService {
 	public selectedQuestionTemplate: QuestionTemaplteOption | undefined;
 	public noteList: Array<Note> = [];
 	public bookmarkGroups: Array<BookmarkGroup> = [];
+	public bookmarkKeyword = '';
 
 	constructor(
 		private clipboard: Clipboard,

@@ -7,7 +7,40 @@
 		</div>
 
 		<div [fdLayoutGridCol]="12" [colMd]="6" [colLg]="4" [colXl]="3">
-			<div class="card"></div>
+			<div class="card">
+				<fd-input-group
+					id="bookmark-search-id"
+					class="card-search"
+					type="search"
+					glyph="search"
+					[glyphAriaLabel]="'Search'"
+					[placeholder]="'Search'"
+					[button]="false"
+					[disabled]="false"
+					[(ngModel)]="service.bookmarkKeyword"
+					(ngModelChange)="onBookmarkKeywordChanged()"
+				>
+				</fd-input-group>
+				@for (bookmarkGroup of service.bookmarkGroups || []; track $index) {
+					<fd-panel [fixed]="true" *ngIf="!bookmarkGroup.isHidden">
+						<h5 fd-panel-title>{{ bookmarkGroup.title }}</h5>
+						<div fd-panel-content>
+							@for (bookmark of bookmarkGroup.children; track $index) {
+								<div *ngIf="!bookmark.isHidden">
+									<a
+										[href]="bookmark.url"
+										[target]="bookmark.shortTitle ?? bookmark.title"
+										fd-link
+										aria-label="Standard"
+										>{{ bookmark.title }}</a
+									>
+								</div>
+								<br />
+							}
+						</div>
+					</fd-panel>
+				}
+			</div>
 		</div>
 
 		<div [fdLayoutGridCol]="12" [colMd]="6" [colLg]="4" [colXl]="3">

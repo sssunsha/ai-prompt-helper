@@ -5,7 +5,11 @@
 		padding: 1rem;
 	}
 	.card {
-		min-height: 700px;
+		height: 700px;
+		overflow-y: auto;
 		background-color: var(--sapBaseColor);
+		&-search {
+			width: 100%;
+		}
 	}
 }
