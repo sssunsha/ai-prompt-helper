@@ -156,7 +156,6 @@ export class AppService {
 				}
 			}
 		});
-		console.dir(this.noteList);
 	}
 
 	private loadPromptSamples(): void {
