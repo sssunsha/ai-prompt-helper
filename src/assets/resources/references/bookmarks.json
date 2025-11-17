@@ -50,5 +50,25 @@
 				"url": "https://tailwindcss.com/"
 			}
 		]
+	},
+	{
+		"title": "财经及资讯工具",
+		"children": [
+			{
+				"title": "亿牛网 (财报数据)",
+				"url": "https://eniu.com/",
+				"shortTitle": "eniu"
+			},
+			{
+				"title": "极致了数据(公众号数据)",
+				"url": "https://www.dajiala.com/main/",
+				"shortTitle": "dajiala"
+			},
+			{
+				"title": "在线计算工具和转换器",
+				"url": "https://tooldone.com/zh",
+				"shortTitle": "tooldone"
+			}
+		]
 	}
 ]
