@@ -95,7 +95,6 @@ export enum EAIModelType {
 	QianWen,
 	WenYan,
 	MiTaSouSuo,
-	DeepSeek,
 }
 
 export interface AIModelConfig {
@@ -134,12 +133,6 @@ export const aiConfigMap = {
 		url: 'https://tongyi.aliyun.com/qianwen/',
 		isTabOpened: false,
 		type: EAIModelType.QianWen,
-	},
-	[EAIModelType.DeepSeek]: {
-		name: 'DeepSeek',
-		url: 'https://chat.deepseek.com/',
-		isTabOpened: false,
-		type: EAIModelType.DeepSeek,
 	},
 	[EAIModelType.MiTaSouSuo]: {
 		name: '秘塔AI搜索',
