@@ -1,4 +1,3 @@
-import { BookmarkGroup } from './../reference-document/reference-document.model';
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { AppService } from '../app.service';
 
@@ -9,6 +8,7 @@ import { AppService } from '../app.service';
 })
 export class DailyComponent implements AfterViewInit {
 	@ViewChild('favoritesIframe') iframeRef: ElementRef<HTMLIFrameElement> | undefined;
+	@ViewChild('debtIframe') debtIframeRef: ElementRef<HTMLIFrameElement> | undefined;
 
 	constructor(public service: AppService) {}
 
@@ -39,6 +39,9 @@ export class DailyComponent implements AfterViewInit {
 					}
 				}
 			};
+		}
+		if (this.debtIframeRef) {
+			this.debtIframeRef.nativeElement.scrollTo(300, 300);
 		}
 	}
 

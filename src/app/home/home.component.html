@@ -26,11 +26,11 @@
 			</fd-toolbar>
 		</fd-dynamic-page-global-actions>
 	</fd-dynamic-page-header>
-	<fd-tab-list>
-		<fd-tab title="Daily"><app-daily></app-daily></fd-tab>
-		<fd-tab title="Prompt Generator"><app-prompt-generator></app-prompt-generator></fd-tab>
-		<fd-tab title="Tools & Notes"><app-tools></app-tools></fd-tab>
-		<fd-tab title="Reference"><app-reference-document></app-reference-document></fd-tab>
+	<fd-tab-list (selectedTabIndexChange)="selectedTabIndexChange($event)" [defaultTab]="activeTabIndex">
+		<fd-tab title="Daily" id="'0"><app-daily></app-daily></fd-tab>
+		<fd-tab title="Prompt Generator" id="1"><app-prompt-generator></app-prompt-generator></fd-tab>
+		<fd-tab title="Tools & Notes" id="2"><app-tools></app-tools></fd-tab>
+		<fd-tab title="Reference" id="3"><app-reference-document></app-reference-document></fd-tab>
 	</fd-tab-list>
 </fd-dynamic-page>
 <div class="clock">

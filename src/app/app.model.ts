@@ -6,3 +6,5 @@ export interface Note {
 	children?: Array<Note>;
 	isHideChildren?: boolean;
 }
+
+export const DEFAULT_TAB_INDEX_KEY = '[ai-prompt-helper]default-tab-index'

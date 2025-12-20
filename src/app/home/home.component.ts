@@ -7,6 +7,7 @@ import { CompleteThemeDefinition, ThemingService } from '@fundamental-ngx/core';
 import { takeUntil, filter, Subject, fromEvent } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AppService } from '../app.service';
+import { DEFAULT_TAB_INDEX_KEY } from '../app.model';
 const urlContains = (themeName: string, search: string): boolean => themeName.toLowerCase().includes(search);
 const isHcb = (themeName: string): boolean => urlContains(themeName, 'hcb');
 const isHcw = (themeName: string): boolean => urlContains(themeName, 'hcw');
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
 	highlightJsThemeCss: SafeResourceUrl | undefined;
 	themes: CompleteThemeDefinition[] = [];
 	currentDate: Date = new Date();
+	activeTabIndex = window.localStorage.getItem(DEFAULT_TAB_INDEX_KEY) || '0';
 
 	constructor(
 		public service: AppService,
@@ -74,6 +76,10 @@ export class HomeComponent implements OnInit {
 	onWindowResize(event: any): void {
 		this.service.screenWidth = event.target.innerWidth;
 		this.service.screenHeight = event.target.innerHeight;
+	}
+
+	selectedTabIndexChange(e: number): void {
+		window.localStorage.setItem(DEFAULT_TAB_INDEX_KEY, e.toString());
 	}
 
 	private trustedResourceUrl = (url: string): SafeResourceUrl =>

@@ -18,4 +18,10 @@
 	.sub-file-item {
 		margin-left: 2rem;
 	}
+
+	::ng-deep {
+		table {
+			text-align: center;
+		}
+	}
 }
