@@ -196,7 +196,7 @@ export interface PomodoroTimerData {
 			.timer-display {
 				padding: 2rem;
 				background-color: white;
-				background-color: var(--fd-background-color, black);
+				background-color: var(--fd-background-color, lightgray);
 				border-radius: 8px;
 				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 			}
@@ -242,7 +242,7 @@ export interface PomodoroTimerData {
 			}
 
 			.settings {
-				background-color: black;
+				background-color: lightgray;
 			}
 
 			.settings-grid {

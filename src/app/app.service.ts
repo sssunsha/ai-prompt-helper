@@ -17,7 +17,7 @@ import {
 	defaultQuestionTemaplteOption,
 	QuestionTemaplteOption,
 } from './prompt-generator/prompt-generator.model';
-import { Note } from './app.model';
+import { Index, Investment, InvestmentGroup, Note } from './app.model';
 import { BookmarkGroup } from './reference-document/reference-document.model';
 
 @Injectable({
@@ -41,6 +41,7 @@ export class AppService {
 	public questionTemplateOptions = defaultQuestionTemaplteOption;
 	public selectedQuestionTemplate: QuestionTemaplteOption | undefined;
 	public noteList: Array<Note> = [];
+	public investmentGroup: Partial<InvestmentGroup> = {};
 	public bookmarkGroups: Array<BookmarkGroup> = [];
 	public bookmarkKeyword = '';
 
@@ -96,6 +97,13 @@ export class AppService {
 		});
 		this.http.get<Array<BookmarkGroup>>('./assets/resources/references/bookmarks.json').subscribe(data => {
 			this.bookmarkGroups = data;
+		});
+		this.initInvestmentGroup();
+	}
+
+	private initInvestmentGroup(): void {
+		this.http.get<Array<Index>>('./assets/investment/index.json').subscribe(data => {
+			this.investmentGroup.indexList = data;
 		});
 	}
 

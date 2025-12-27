@@ -1,0 +1,71 @@
+<fd-layout-grid>
+	<div fdLayoutGridRow>
+		<div [fdLayoutGridCol]="3">
+			<div class="left">
+				<ul fd-list>
+					<li fd-list-item (click)="showIndex()">
+						<span fd-list-title> Index</span>
+						<!-- <span fd-list-secondary type="positive"> 1 </span> -->
+					</li>
+					<li fd-list-item>
+						<span fd-list-title> List item 2 </span>
+						<span fd-list-secondary type="critical"> 2 </span>
+					</li>
+					<li fd-list-item>
+						<span fd-list-title> List item 3 </span>
+						<span fd-list-secondary type="negative"> 3 </span>
+					</li>
+					<li fd-list-item>
+						<span fd-list-title> List item 4 </span>
+						<span fd-list-secondary type="informative"> 4 </span>
+					</li>
+					<li fd-list-item>
+						<span fd-list-title> List item 5 </span>
+						<span fd-list-secondary> 5 </span>
+					</li>
+					<li fd-list-item [counter]="123.123456">
+						<span fd-list-title> List item 6 with Counter </span>
+					</li>
+					<li fd-list-item [counter]="54354.21345">
+						<span fd-list-title> List item 7 with Counter </span>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div [fdLayoutGridCol]="9">
+			<table fd-table aria-label="Default">
+				<thead fd-table-header>
+					<tr fd-table-row>
+						<th fd-table-cell>{{ table.header1 }}</th>
+						<th fd-table-cell>{{ table.header2 }}</th>
+						<th fd-table-cell>{{ table.header3 }}</th>
+						<th fd-table-cell>{{ table.header4 }}</th>
+						<th fd-table-cell>{{ table.header5 }}</th>
+					</tr>
+				</thead>
+				<tbody fd-table-body>
+					@for (row of table.value; track row) {
+						<tr fd-table-row>
+							<td fd-table-cell>
+								<a fd-link href="#">{{ row[0] }}</a>
+							</td>
+							<td fd-table-cell>
+								<a fd-link href="#">{{ row[1] }}</a>
+							</td>
+							<td fd-table-cell>
+								<a fd-link href="#">{{ row[2] }}</a>
+							</td>
+							<td fd-table-cell>
+								<a fd-link href="#">{{ row[3] }}</a>
+							</td>
+							<td fd-table-cell>
+								<a fd-link href="#">{{ row[4] }}</a>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</fd-layout-grid>

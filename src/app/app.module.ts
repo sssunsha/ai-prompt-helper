@@ -19,6 +19,7 @@ import { PromptAdvancedSettingComponent } from './prompt-generator/prompt-advanc
 import { ToolsComponent } from './tools/tools.component';
 import { DailyComponent } from './daily/daily.component';
 import { PomodoroTimerComponent } from './daily/pomodoro-timer/pomodoro-timer.component';
+import { InvestmentComponent } from './investment/investment.component';
 
 @NgModule({
 	declarations: [
@@ -32,6 +33,7 @@ import { PomodoroTimerComponent } from './daily/pomodoro-timer/pomodoro-timer.co
 		ToolsComponent,
 		DailyComponent,
 		PomodoroTimerComponent,
+		InvestmentComponent,
 	],
 	imports: [
 		BrowserModule,

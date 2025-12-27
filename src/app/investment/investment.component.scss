@@ -1,0 +1,10 @@
+@import '../../base.scss';
+
+:host {
+	.left {
+		background-color: antiquewhite;
+	}
+	.right {
+		background-color: aqua;
+	}
+}
