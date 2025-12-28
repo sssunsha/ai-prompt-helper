@@ -55,6 +55,11 @@
 		"title": "财经及资讯工具",
 		"children": [
 			{
+				"title": "乌龟量化",
+				"url": "https://wglh.com/",
+				"shortTitle": "wglh"
+			},
+			{
 				"title": "亿牛网 (财报数据)",
 				"url": "https://eniu.com/",
 				"shortTitle": "eniu"

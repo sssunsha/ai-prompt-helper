@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
 
 export interface Table {
@@ -15,8 +15,9 @@ export interface Table {
 	templateUrl: './investment.component.html',
 	styleUrl: './investment.component.scss',
 })
-export class InvestmentComponent {
+export class InvestmentComponent implements OnInit {
 	public content = '';
+	public selectedIndex = 0;
 	public table: Table = {
 		header1: '',
 		header2: '',
@@ -26,14 +27,28 @@ export class InvestmentComponent {
 		value: [],
 	};
 	constructor(public service: AppService) {}
+	ngOnInit(): void {
+		setTimeout(() => {
+			this.showIndex();
+		}, 300);
+	}
+
+	listItemSelected(index: number): void {
+		this.selectedIndex = index;
+		switch (index) {
+			case 0:
+				this.showIndex();
+				break;
+		}
+	}
 
 	showIndex(): void {
 		this.content = JSON.stringify(this.service.investmentGroup.indexList);
-		this.table.header1 = 'category';
-		this.table.header2 = 'name';
-		this.table.header3 = 'id';
-		this.table.header4 = 'description';
-		this.table.header5 = 'content';
+		this.table.header1 = 'Category';
+		this.table.header2 = 'Name';
+		this.table.header3 = 'ID';
+		this.table.header4 = 'Description';
+		this.table.header5 = 'Content & Actions';
 		this.table.value = [];
 		this.service.investmentGroup.indexList?.forEach(index => {
 			index.value.forEach(item => {
@@ -41,4 +56,6 @@ export class InvestmentComponent {
 			});
 		});
 	}
+
+	evaluation(id: string): void {}
 }

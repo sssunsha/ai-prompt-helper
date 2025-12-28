@@ -7,6 +7,9 @@
 						<ng-container *ngTemplateOutlet="promptResult"></ng-container>
 					</div>
 				</fd-tab>
+				<fd-tab [title]="service.isMobileMode ? '范例' : '提示词范例'">
+					<app-prompt-sample></app-prompt-sample>
+				</fd-tab>
 				<fd-tab [title]="service.isMobileMode ? '材料' : '参考材料'">
 					<div fd-form-item class="sap-margin-top-small">
 						<textarea
@@ -20,9 +23,6 @@
 							[(ngModel)]="service.referenceDoc"
 						></textarea>
 					</div>
-				</fd-tab>
-				<fd-tab [title]="service.isMobileMode ? '范例' : '提示词范例'">
-					<app-prompt-sample></app-prompt-sample>
 				</fd-tab>
 				<fd-tab [title]="service.isMobileMode ? '策略' : '提示词增强策略'">
 					<app-prompt-strategy></app-prompt-strategy>

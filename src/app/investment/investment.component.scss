@@ -2,9 +2,17 @@
 
 :host {
 	.left {
-		background-color: antiquewhite;
+		height: 88vh;
+		overflow: auto;
 	}
+
 	.right {
-		background-color: aqua;
+		overflow: auto;
+		height: 88vh;
+		.action {
+			display: flex;
+			min-width: 300px;
+			justify-content: space-between;
+		}
 	}
 }

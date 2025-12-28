@@ -80,6 +80,7 @@
 		fd-tab {
 			max-height: calc(100vh - 92px);
 			overflow: hidden;
+			height: 100%;
 		}
 		.ai-model-select {
 			&-desktop {
