@@ -174,6 +174,7 @@ export interface PomodoroTimerData {
 
 			.mode-selector {
 				display: flex;
+				justify-content: space-around;
 			}
 
 			.mode-btn {
@@ -211,9 +212,11 @@ export interface PomodoroTimerData {
 
 			.controls {
 				display: flex;
+				justify-content: space-between;
 			}
 
 			.control-btn {
+				width: 30%;
 				font-size: 1rem;
 				font-weight: 500;
 				border: none;
