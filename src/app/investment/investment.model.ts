@@ -29,6 +29,7 @@ export interface Index {
 
 export interface InvestmentGroup {
 	indexList: Array<Index>;
+	wideETFSuggestionList: Array<any>;
 }
 
 export enum InvestmentListType {

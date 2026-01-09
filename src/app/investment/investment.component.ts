@@ -20,7 +20,7 @@ export class InvestmentComponent implements OnInit {
 	public indexReferenceContent = '';
 	public markdownContentPath = '';
 	public InvestmentListType = InvestmentListType;
-	public selectedIndex = InvestmentListType.wide_etf_suggestion;
+	public selectedIndex = InvestmentListType.index_reference;
 	public table: Table = {
 		header1: '',
 		header2: '',
@@ -29,7 +29,7 @@ export class InvestmentComponent implements OnInit {
 		header5: '',
 		value: [],
 	};
-	constructor(public service: AppService) {}
+	constructor(public appService: AppService) {}
 	ngOnInit(): void {
 		setTimeout(() => {
 			this.listItemSelected(this.selectedIndex);
@@ -55,19 +55,23 @@ export class InvestmentComponent implements OnInit {
 	}
 
 	showIndex(): void {
-		this.indexReferenceContent = JSON.stringify(this.service.investmentGroup.indexList);
+		this.indexReferenceContent = JSON.stringify(this.appService.investmentGroup.indexList);
 		this.table.header1 = 'Category';
 		this.table.header2 = 'Name';
 		this.table.header3 = 'ID';
 		this.table.header4 = 'Description';
 		this.table.header5 = 'Content & Actions';
 		this.table.value = [];
-		this.service.investmentGroup.indexList?.forEach(index => {
+		this.appService.investmentGroup.indexList?.forEach(index => {
 			index.value.forEach(item => {
 				this.table.value.push([index.category, item.name, item.id, item.description, item.content]);
 			});
 		});
 	}
 
-	evaluation(id: string): void {}
+	evaluation(id: string, name: string): void {
+		this.appService.copy(
+			`1. 请作为资深投资经理，从多个维度分析指数(${name}(${id}))当前是否处于低估阶段和投资建议。2. 请先直接表格输出结论和各维度评判依据，后给出分析过程和逻辑。3. 请提供分析结果图表。4. 最后帮我生成该指数的定投金额与加仓/止盈阈值的执行清单`
+		);
+	}
 }

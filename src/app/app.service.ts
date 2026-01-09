@@ -67,8 +67,8 @@ export class AppService {
 		this.aiConfigMap[this.aiModel].isTabOpened = true;
 	}
 
-	copy(): void {
-		this.clipboard.copy(this.afterEnhancement);
+	copy(content = ''): void {
+		this.clipboard.copy(content ?? this.afterEnhancement);
 	}
 
 	reset(): void {
