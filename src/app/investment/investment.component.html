@@ -5,113 +5,98 @@
 				<ul fd-list>
 					<li
 						fd-list-item
-						(click)="listItemSelected(0)"
+						(click)="listItemSelected(InvestmentListType.index_reference)"
 						[interactive]="true"
-						[selected]="selectedIndex === 0"
+						[selected]="selectedIndex === InvestmentListType.index_reference"
 					>
 						<span fd-list-title> Index</span>
 						<!-- <span fd-list-secondary type="positive"> 1 </span> -->
 					</li>
 					<li
 						fd-list-item
-						(click)="listItemSelected(1)"
+						(click)="listItemSelected(InvestmentListType.wide_etf_suggestion)"
 						[interactive]="true"
-						[selected]="selectedIndex === 1"
+						[selected]="selectedIndex === InvestmentListType.wide_etf_suggestion"
 					>
-						<span fd-list-title> List item 2 </span>
-						<span fd-list-secondary type="critical"> 2 </span>
+						<span fd-list-title> ETF </span>
 					</li>
-					<li
-						fd-list-item
-						(click)="listItemSelected(2)"
-						[interactive]="true"
-						[selected]="selectedIndex === 2"
-					>
-						<span fd-list-title> List item 3 </span>
-						<span fd-list-secondary type="negative"> 3 </span>
-					</li>
-					<li
-						fd-list-item
-						(click)="listItemSelected(3)"
-						[interactive]="true"
-						[selected]="selectedIndex === 3"
-					>
-						<span fd-list-title> List item 4 </span>
-						<span fd-list-secondary type="informative"> 4 </span>
-					</li>
-					<li
-						fd-list-item
-						(click)="listItemSelected(4)"
-						[interactive]="true"
-						[selected]="selectedIndex === 4"
-					>
-						<span fd-list-title> List item 5 </span>
-						<span fd-list-secondary> 5 </span>
-					</li>
+					@for (i of [2, 3, 4, 5, 6, 7, 8, 9]; track $index) {
+						<li fd-list-item [interactive]="true">
+							<span fd-list-title> item {{ i }} </span>
+							<span fd-list-secondary type="negative"> {{ i }} </span>
+						</li>
+					}
 				</ul>
 			</div>
 		</div>
 
 		<div [fdLayoutGridCol]="9">
-			<div class="right" *ngIf="content">
-				<table fd-table aria-label="Default">
-					<thead fd-table-header>
-						<tr fd-table-row>
-							<th fd-table-cell>{{ table.header1 }}</th>
-							<th fd-table-cell>{{ table.header2 }}</th>
-							<th fd-table-cell>{{ table.header3 }}</th>
-							<th fd-table-cell>{{ table.header4 }}</th>
-							<th fd-table-cell>{{ table.header5 }}</th>
-						</tr>
-					</thead>
-					<tbody fd-table-body>
-						@for (row of table.value; track row) {
+			<div class="right">
+				<ng-container *ngIf="selectedIndex !== InvestmentListType.index_reference && !!mdContentPath">
+					<markdown class="expanded-page" lineNumbers [start]="0" [src]="mdContentPath"> </markdown>
+				</ng-container>
+
+				<!-- for index reference -->
+				<ng-container *ngIf="indexReferenceContent && selectedIndex === InvestmentListType.index_reference">
+					<table fd-table aria-label="Default">
+						<thead fd-table-header>
 							<tr fd-table-row>
-								<td fd-table-cell>
-									{{ row[0] }}
-								</td>
-								<td fd-table-cell>
-									{{ row[1] }}
-								</td>
-								<td fd-table-cell>
-									@if (row[4]) {
-										<a fd-link [href]="row[4]" target="_blank">{{ row[2] }}</a>
-									} @else {
-										{{ row[2] }}
-									}
-								</td>
-								<td fd-table-cell>
-									{{ row[3] }}
-								</td>
-								<td fd-table-cell>
-									<div class="action">
-										<button
-											fd-button
-											label="评估"
-											fdCozy
-											(click)="evaluation(row[2])"
-											fdType="emphasized"
-										></button>
-										<button
-											fd-button
-											label="Evaluation"
-											fdCozy
-											(click)="evaluation(row[2])"
-											fdType="emphasized"
-										></button>
-										<button
-											fd-button
-											label="Evaluation"
-											fdCozy
-											(click)="evaluation(row[2])"
-											fdType="emphasized"
-										></button>
-									</div>
-								</td>
+								<th fd-table-cell>{{ table.header1 }}</th>
+								<th fd-table-cell>{{ table.header2 }}</th>
+								<th fd-table-cell>{{ table.header3 }}</th>
+								<th fd-table-cell>{{ table.header4 }}</th>
+								<th fd-table-cell>{{ table.header5 }}</th>
 							</tr>
-						}
-					</tbody>
-				</table>
+						</thead>
+						<tbody fd-table-body>
+							@for (row of table.value; track row) {
+								<tr fd-table-row>
+									<td fd-table-cell>
+										{{ row[0] }}
+									</td>
+									<td fd-table-cell>
+										{{ row[1] }}
+									</td>
+									<td fd-table-cell>
+										@if (row[4]) {
+											<a fd-link [href]="row[4]" target="_blank">{{ row[2] }}</a>
+										} @else {
+											{{ row[2] }}
+										}
+									</td>
+									<td fd-table-cell>
+										{{ row[3] }}
+									</td>
+									<td fd-table-cell>
+										<div class="action">
+											<button
+												fd-button
+												label="评估"
+												fdCozy
+												(click)="evaluation(row[2])"
+												fdType="emphasized"
+											></button>
+											<button
+												fd-button
+												label="Evaluation"
+												fdCozy
+												(click)="evaluation(row[2])"
+												fdType="emphasized"
+											></button>
+											<button
+												fd-button
+												label="Evaluation"
+												fdCozy
+												(click)="evaluation(row[2])"
+												fdType="emphasized"
+											></button>
+										</div>
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</ng-container>
 			</div>
 		</div>
 	</div>

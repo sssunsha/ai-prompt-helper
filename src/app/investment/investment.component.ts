@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
+import { InvestmentListType } from './investment.model';
 
 export interface Table {
 	header1: string;
@@ -16,8 +17,10 @@ export interface Table {
 	styleUrl: './investment.component.scss',
 })
 export class InvestmentComponent implements OnInit {
-	public content = '';
-	public selectedIndex = 0;
+	public indexReferenceContent = '';
+	public markdownContentPath = '';
+	public InvestmentListType = InvestmentListType;
+	public selectedIndex = InvestmentListType.wide_etf_suggestion;
 	public table: Table = {
 		header1: '',
 		header2: '',
@@ -29,21 +32,30 @@ export class InvestmentComponent implements OnInit {
 	constructor(public service: AppService) {}
 	ngOnInit(): void {
 		setTimeout(() => {
-			this.showIndex();
+			this.listItemSelected(this.selectedIndex);
 		}, 300);
 	}
 
-	listItemSelected(index: number): void {
+	listItemSelected(index: InvestmentListType): void {
 		this.selectedIndex = index;
 		switch (index) {
-			case 0:
+			case InvestmentListType.index_reference:
 				this.showIndex();
+				break;
+			default:
 				break;
 		}
 	}
 
+	get mdContentPath(): string {
+		if (this.selectedIndex !== InvestmentListType.index_reference) {
+			return `assets/investment/${this.selectedIndex}.md`;
+		}
+		return '';
+	}
+
 	showIndex(): void {
-		this.content = JSON.stringify(this.service.investmentGroup.indexList);
+		this.indexReferenceContent = JSON.stringify(this.service.investmentGroup.indexList);
 		this.table.header1 = 'Category';
 		this.table.header2 = 'Name';
 		this.table.header3 = 'ID';

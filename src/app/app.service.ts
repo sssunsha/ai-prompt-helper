@@ -17,8 +17,9 @@ import {
 	defaultQuestionTemaplteOption,
 	QuestionTemaplteOption,
 } from './prompt-generator/prompt-generator.model';
-import { Index, Investment, InvestmentGroup, Note } from './app.model';
+import { Note } from './app.model';
 import { BookmarkGroup } from './reference-document/reference-document.model';
+import { InvestmentGroup, Index } from './investment/investment.model';
 
 @Injectable({
 	providedIn: 'root',
