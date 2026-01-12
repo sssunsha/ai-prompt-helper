@@ -35,5 +35,6 @@ export interface InvestmentGroup {
 export enum InvestmentListType {
 	index_reference = 'index_reference',
 	wide_etf_suggestion = 'wide_etf_suggestion',
+	bond_fund_suggestion = 'bond_fund_suggestion',
 	others = 'others',
 }

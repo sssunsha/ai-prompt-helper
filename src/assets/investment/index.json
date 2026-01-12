@@ -512,70 +512,70 @@
 				"name": "恒生",
 				"id": "HSI",
 				"description": "香港股票市场最具影响力的基准指数，由恒生指数有限公司编制，包含约50家市值最大且成交活跃的香港上市公司，综合反映香港股市的整体表现[1,6](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/HKHSI/",
+				"content": "",
 				"type": "INDEX"
 			},
 			{
 				"name": "恒生中国企业",
 				"id": "HSCEI",
 				"description": "俗称国企指数或H股指数，由恒生指数有限公司编制，反映在香港上市的大型中国内地企业（H股）的整体表现，成分股数量通常为50只[1,9](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/HKHSCEI/",
+				"content": "",
 				"type": "INDEX"
 			},
 			{
 				"name": "恒生科技",
 				"id": "HSTECH",
 				"description": "代表经筛选后最大30间与科技主题高度相关的香港上市公司，涵盖互联网平台、软件服务、硬件设备、半导体等行业，被称为港股的“纳斯达克”[1,5](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/hkhstech/",
+				"content": "",
 				"type": "INDEX"
 			},
 			{
 				"name": "恒生综合",
 				"id": "HSCI",
 				"description": "覆盖香港联交所主板上市证券总市值约95%的宽基指数，包含大型股、中型股及小型股指数，是港股通标的资格的重要依据[7](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/HKHSCI/",
+				"content": "",
 				"type": "INDEX"
 			},
 			{
 				"name": "恒生互联网科技业",
 				"id": "HSIIT",
 				"description": "从恒生综合指数中选取主要经营资讯科技业务的成分股，纯度高，集中投资于互联网平台巨头[5](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/HKHSIIT/",
+				"content": "",
 				"type": "INDEX"
 			},
 			{
 				"name": "红筹",
 				"id": "HSCCI",
 				"description": "由恒生指数有限公司编制，反映在港上市的中资红筹企业（在海外注册、香港上市，由中国内地机构控制的企业）的整体表现[6](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/HKHSCCI/",
+				"content": "",
 				"type": "INDEX"
 			},
 			{
 				"name": "中证港股通中国100",
 				"id": "930933",
 				"description": "从港股通范围内选取100家市值大、成交活跃的内地公司股票组成，前五大权重行业通常为金融、可选消费、信息技术等[3](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/csi930933/",
+				"content": "",
 				"type": "INDEX"
 			},
 			{
 				"name": "中证沪港深300",
 				"id": "930930",
 				"description": "覆盖上海、深圳和香港三地上市的300只代表性股票，为投资者提供跨市场的综合性投资标的[2](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/csi930930/",
+				"content": "",
 				"type": "INDEX"
 			},
 			{
 				"name": "港股通50",
 				"id": "930931",
 				"description": "选取港股通范围内市值较大、流动性较好的50只股票，代表港股通核心资产[2](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/csi930931/",
+				"content": "",
 				"type": "INDEX"
 			},
 			{
 				"name": "国证港股通科技",
 				"id": "980033",
 				"description": "由国证指数公司编制，覆盖港股通科技领域龙头上市公司，行业覆盖较全面，包括互联网、软件服务、硬件设备、医药生物、汽车、半导体等[5](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/sz980033/",
+				"content": "",
 				"type": "INDEX"
 			}
 		]
@@ -587,77 +587,70 @@
 				"name": "道琼斯工业平均",
 				"id": "DJI",
 				"description": "美国历史最悠久的股市指数，由30家具有代表性的美国大型上市公司（蓝筹股）组成，是观察美国传统工业及重要行业表现的重要窗口。[2](@ref)",
-				"content": "https://wglh.com/chinaindicespe/USDJI/",
+				"content": "https://cn.investing.com/indices/us-30",
 				"type": "INDEX"
 			},
 			{
 				"name": "标准普尔500",
 				"id": "SPX",
 				"description": "由美国500家在各行业具有领导地位的大型上市公司组成，覆盖美股总市值约80%，采样面广、代表性强，被广泛视为最能反映美国整体股市表现的基准指数。[2,3](@ref)",
-				"content": "https://wglh.com/chinaindicespe/USSPX/",
+				"content": "https://cn.investing.com/indices/us-spx-500",
 				"type": "INDEX"
 			},
 			{
 				"name": "纳斯达克综合",
 				"id": "IXIC",
 				"description": "涵盖了在纳斯达克交易所上市的所有公司股票，科技类公司占比超60%，是追踪美国高科技企业及成长股表现的核心指标。[2](@ref)",
-				"content": "https://wglh.com/chinaindicespe/USIXIC/",
+				"content": "https://cn.investing.com/indices/nasdaq-composite",
 				"type": "INDEX"
 			},
 			{
 				"name": "纳斯达克100",
 				"id": "NDX",
 				"description": "由纳斯达克综合指数中剔除金融股后，规模最大的100家公司组成，信息技术行业占比近58%，集中代表了美国科技巨头的表现。[3](@ref)",
-				"content": "https://wglh.com/chinaindicespe/USNDX/",
+				"content": "https://cn.investing.com/indices/nq-100",
 				"type": "INDEX"
 			},
 			{
 				"name": "罗素2000",
 				"id": "RUT",
 				"description": "追踪美国中小市值公司表现的基准指数，是衡量美国市场中小盘股行情的重要指标。[10](@ref)",
-				"content": "https://wglh.com/chinaindicespe/USRUT/",
+				"content": "https://cn.investing.com/indices/smallcap-2000",
 				"type": "INDEX"
 			},
 			{
 				"name": "英国富时100",
 				"id": "FTSE",
 				"description": "由在伦敦证券交易所上市的市值最大的100家公司股票组成，是评估英国股市表现的最主要基准。[2,8](@ref)",
-				"content": "https://wglh.com/chinaindicespe/UKFTSE/",
+				"content": "https://cn.investing.com/indices/uk-100",
 				"type": "INDEX"
 			},
 			{
 				"name": "德国DAX",
 				"id": "DAX",
 				"description": "由法兰克福证券交易所上市的40家主要德国公司组成，采用整体回报法计算，是德国乃至欧洲经济的晴雨表。[2,8](@ref)",
-				"content": "https://wglh.com/chinaindicespe/DEDAX/",
+				"content": "https://cn.investing.com/indices/germany-30",
 				"type": "INDEX"
 			},
 			{
 				"name": "法国CAC40",
 				"id": "CAC",
 				"description": "由巴黎证券交易所市值最大的40家公司股票构成，是反映法国证券市场走势的基准指数。[2,8](@ref)",
-				"content": "https://wglh.com/chinaindicespe/FRCAC/",
+				"content": "https://cn.investing.com/indices/france-40",
 				"type": "INDEX"
 			},
 			{
 				"name": "欧洲斯托克50",
 				"id": "STOXX50",
 				"description": "由欧元区范围内12个成员国国家的50只超级蓝筹股组成，是反映欧元区整体股市表现的代表性指数。[8](@ref)",
-				"content": "https://wglh.com/chinaindicespe/EUSTOXX50/",
+				"content": "https://cn.investing.com/indices/eu-stoxx50",
 				"type": "INDEX"
 			},
 			{
 				"name": "日经225",
 				"id": "N225",
 				"description": "由东京证券交易所第一部上市的225家最具代表性的公司股票组成，是日本乃至亚洲股市最受关注的基准指数之一。[9](@ref)",
-				"content": "https://wglh.com/chinaindicespe/JPN225/",
-				"type": "INDEX"
-			},
-			{
-				"name": "东证股价",
-				"id": "TOPIX",
-				"description": "覆盖东京证券交易所第一部所有上市公司的综合指数，是衡量日本股市整体表现的另一个重要宽基指数。[9](@ref)",
-				"content": "https://wglh.com/chinaindicespe/JPTOPIX/",
+				"content": "https://cn.investing.com/indices/japan-ni225",
 				"type": "INDEX"
 			}
 		]
@@ -669,84 +662,42 @@
 				"name": "MSCI ACWI 指数 (所有国家世界指数)",
 				"id": "MSCIACWI",
 				"description": "MSCI的旗舰全球股票指数，旨在反映全球23个发达市场和24个新兴市场中大型和中型股的整体表现，是全球机构投资者进行资产配置的重要基准[7](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/MSCIMSCIACWI/",
-				"type": "INDEX"
-			},
-			{
-				"name": "MSCI 新兴市场",
-				"id": "MSEMF",
-				"description": "涵盖全球24个新兴市场国家的大中型股票，是跟踪新兴股市表现最广泛使用的基准之一。中国A股、H股等在其中占有重要权重[7,9](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/MSCIMSEMF/",
-				"type": "INDEX"
-			},
-			{
-				"name": "罗素1000",
-				"id": "RUI",
-				"description": "追踪美国市值排名前1000的公司股票，代表美国股市约92%的总市值，是衡量美国大盘股和中盘股表现的重要指标[4](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/USRUI/",
-				"type": "INDEX"
-			},
-			{
-				"name": "罗素3000",
-				"id": "RUA",
-				"description": "覆盖美国市值最大的3000家公司，约占美国可投资股票市场的98%，是衡量整个美国股市表现的宽基指数[4](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/USRUA/",
+				"content": "https://cn.investing.com/indices/msci-world-stock",
 				"type": "INDEX"
 			},
 			{
 				"name": "富时中国A50",
 				"id": "XIN9",
 				"description": "由富时罗素编制，包含中国A股市场市值最大的50家公司，是国际投资者投资中国A股市场的重要风向标，并有相应的指数期货产品[4,5](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/FTXIN9/",
-				"type": "INDEX"
-			},
-			{
-				"name": "深证100",
-				"id": "399004",
-				"description": "由深圳证券市场市值最大、成交最活跃的100只股票组成，代表深圳A股市场的核心优质资产[3](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/sz399004/",
-				"type": "INDEX"
-			},
-			{
-				"name": "创业板",
-				"id": "399006",
-				"description": "由深圳证券交易所创业板中最具代表性的100家上市企业股票组成，反映创业板市场的整体运行情况[3](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/sz399006/",
-				"type": "INDEX"
-			},
-			{
-				"name": "道琼斯新兴市场",
-				"id": "DJEMM",
-				"description": "由道琼斯公司编制，覆盖韩国、中国台湾、巴西、墨西哥等12个主要新兴市场，旨在反映这些市场股票的整体表现[8](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/USDJEMM/",
+				"content": "https://cn.investing.com/indices/ftse-china-a50",
 				"type": "INDEX"
 			},
 			{
 				"name": "韩国综合股价指数 (KOSPI)",
 				"id": "KS11",
 				"description": "韩国交易所的核心股票指数，综合了所有交易股票的价格数据，是反映韩国股市整体走势的主要指标[4,5](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/KRKS11/",
+				"content": "https://cn.investing.com/indices/kospi",
 				"type": "INDEX"
 			},
 			{
 				"name": "印度孟买SENSEX 30",
 				"id": "SENSEX",
 				"description": "印度最受欢迎、历史最悠久的股票指数，由孟买证券交易所30家主要上市公司股票组成，是印度经济的晴雨表[4,5](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/INSENSEX/",
+				"content": "https://cn.investing.com/indices/sensex",
 				"type": "INDEX"
 			},
 			{
 				"name": "越南VN30",
 				"id": "VN30",
 				"description": "由胡志明证券交易所市值最大、流动性最好的30家公司股票组成，是反映越南股市蓝筹股表现的核心指数[4,5](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/VNVN30/",
+				"content": "https://cn.investing.com/indices/vn-30",
 				"type": "INDEX"
 			},
 			{
 				"name": "巴西IBOVESPA",
 				"id": "IBOV",
 				"description": "巴西圣保罗交易所的主要指数，由该交易所成交量最大的股票组成，是拉丁美洲地区的重要市场指标[9](@ref)。",
-				"content": "https://wglh.com/chinaindicespe/BRIBOV/",
+				"content": "https://cn.investing.com/indices/bovespa",
 				"type": "INDEX"
 			}
 		]
