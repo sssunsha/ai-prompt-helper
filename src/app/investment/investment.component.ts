@@ -1,15 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app.service';
-import { InvestmentListType } from './investment.model';
-
-export interface Table {
-	header1: string;
-	header2: string;
-	header3: string;
-	header4: string;
-	header5: string;
-	value: Array<Array<string>>;
-}
+import { InvestmentListType, Table, ifrmameList } from './investment.model';
 
 @Component({
 	selector: 'app-investment',
@@ -20,6 +11,12 @@ export class InvestmentComponent implements OnInit {
 	public indexReferenceContent = '';
 	public markdownContentPath = '';
 	public InvestmentListType = InvestmentListType;
+	public ifrmameList: Array<ifrmameList> = [
+		{
+			src: 'http://value500.com/BuffettIndex.asp',
+			title: 'Buffett Index',
+		},
+	];
 	public selectedIndex = InvestmentListType.index_reference;
 	public table: Table = {
 		header1: '',
@@ -31,6 +28,8 @@ export class InvestmentComponent implements OnInit {
 	};
 	constructor(public appService: AppService) {}
 	ngOnInit(): void {
+		this.selectedIndex =
+			(this.appService.activeIndex.subIndex as InvestmentListType) ?? InvestmentListType.index_reference;
 		setTimeout(() => {
 			this.listItemSelected(this.selectedIndex);
 		}, 300);
@@ -38,6 +37,7 @@ export class InvestmentComponent implements OnInit {
 
 	listItemSelected(index: InvestmentListType): void {
 		this.selectedIndex = index;
+		this.appService.activeIndex = { subIndex: this.selectedIndex };
 		switch (index) {
 			case InvestmentListType.index_reference:
 				this.showIndex();
@@ -48,8 +48,11 @@ export class InvestmentComponent implements OnInit {
 	}
 
 	get mdContentPath(): string {
-		if (this.selectedIndex !== InvestmentListType.index_reference) {
-			return `assets/investment/${this.selectedIndex}.md`;
+		if (
+			this.selectedIndex !== InvestmentListType.index_reference &&
+			this.selectedIndex !== InvestmentListType.market_status
+		) {
+			return `assets/investment/${InvestmentListType[this.selectedIndex]}.md`;
 		}
 		return '';
 	}
@@ -71,7 +74,7 @@ export class InvestmentComponent implements OnInit {
 
 	evaluation(id: string, name: string): void {
 		this.appService.copy(
-			`1. 请作为资深投资经理，从多个维度分析指数(${name}(${id}))当前是否处于低估阶段和投资建议。2. 请先直接表格输出结论和各维度评判依据，后给出分析过程和逻辑。3. 请提供分析结果图表。4. 最后帮我生成该指数的定投金额与加仓/止盈阈值的执行清单`
+			`1. 请作为资深投资经理和证券分析师，从多个维度分析指数(${name}(${id}))当前是否处于低估阶段和投资建议。2. 请先直接表格输出结论和各维度评判依据，后给出分析过程和逻辑。3. 请提供分析结果图表。4. 最后帮我生成该指数的定投金额与加仓/止盈阈值的执行清单`
 		);
 	}
 }

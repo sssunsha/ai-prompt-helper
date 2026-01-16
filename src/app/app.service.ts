@@ -17,7 +17,7 @@ import {
 	defaultQuestionTemaplteOption,
 	QuestionTemaplteOption,
 } from './prompt-generator/prompt-generator.model';
-import { Note } from './app.model';
+import { ActiveIndex, DEFAULT_TAB_INDEX_KEY, Note } from './app.model';
 import { BookmarkGroup } from './reference-document/reference-document.model';
 import { InvestmentGroup, Index } from './investment/investment.model';
 
@@ -45,6 +45,7 @@ export class AppService {
 	public investmentGroup: Partial<InvestmentGroup> = {};
 	public bookmarkGroups: Array<BookmarkGroup> = [];
 	public bookmarkKeyword = '';
+	private _activeIndex: ActiveIndex = { index: 0, subIndex: 0 };
 
 	constructor(
 		private clipboard: Clipboard,
@@ -89,7 +90,20 @@ export class AppService {
 		return this.screenWidth <= 1024;
 	}
 
+	get activeIndex(): ActiveIndex {
+		return this._activeIndex;
+	}
+
+	set activeIndex(activeIndex: Partial<ActiveIndex>) {
+		this._activeIndex = {...this._activeIndex,...activeIndex};
+		// sync to local storage
+		window.localStorage.setItem(DEFAULT_TAB_INDEX_KEY, JSON.stringify(this._activeIndex));
+	}
+
 	private initData(): void {
+		// set active index
+		this.activeIndex = JSON.parse(window.localStorage.getItem(DEFAULT_TAB_INDEX_KEY) || '{"index":0,"subIndex":0}');
+
 		this.http.get('./assets/data.json').subscribe(data => {
 			if (data) {
 				this.noteList = [];

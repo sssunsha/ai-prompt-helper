@@ -8,3 +8,8 @@ export interface Note {
 }
 
 export const DEFAULT_TAB_INDEX_KEY = '[ai-prompt-helper]default-tab-index';
+
+export interface ActiveIndex {
+	index: number;
+	subIndex?: number;
+}

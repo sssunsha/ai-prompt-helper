@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
 	highlightJsThemeCss: SafeResourceUrl | undefined;
 	themes: CompleteThemeDefinition[] = [];
 	currentDate: Date = new Date();
-	activeTabIndex = window.localStorage.getItem(DEFAULT_TAB_INDEX_KEY) || '0';
+	activeTabIndex = '0';
 
 	constructor(
 		public service: AppService,
@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit {
 				}
 			}
 		});
+		this.activeTabIndex = this.service.activeIndex.index.toString();
 	}
 
 	get aiModelList(): Array<AIModelConfig> {
@@ -79,7 +80,7 @@ export class HomeComponent implements OnInit {
 	}
 
 	selectedTabIndexChange(e: number): void {
-		window.localStorage.setItem(DEFAULT_TAB_INDEX_KEY, e.toString());
+		this.service.activeIndex = { index: e };
 	}
 
 	private trustedResourceUrl = (url: string): SafeResourceUrl =>

@@ -5,12 +5,19 @@
 				<ul fd-list>
 					<li
 						fd-list-item
+						(click)="listItemSelected(InvestmentListType.market_status)"
+						[interactive]="true"
+						[selected]="selectedIndex === InvestmentListType.market_status"
+					>
+						<span fd-list-title> Market Status</span>
+					</li>
+					<li
+						fd-list-item
 						(click)="listItemSelected(InvestmentListType.index_reference)"
 						[interactive]="true"
 						[selected]="selectedIndex === InvestmentListType.index_reference"
 					>
 						<span fd-list-title> Index</span>
-						<!-- <span fd-list-secondary type="positive"> 1 </span> -->
 					</li>
 					<li
 						fd-list-item
@@ -28,7 +35,15 @@
 					>
 						<span fd-list-title> Bond Fund </span>
 					</li>
-					@for (i of [3, 4, 5, 6, 7, 8, 9]; track $index) {
+					<li
+						fd-list-item
+						(click)="listItemSelected(InvestmentListType.strategy_fund_suggestion)"
+						[interactive]="true"
+						[selected]="selectedIndex === InvestmentListType.strategy_fund_suggestion"
+					>
+						<span fd-list-title> Strategy Fund </span>
+					</li>
+					@for (i of [4, 5, 6, 7, 8, 9]; track $index) {
 						<li fd-list-item [interactive]="true">
 							<span fd-list-title> item {{ i }} </span>
 							<span fd-list-secondary type="negative"> {{ i }} </span>
@@ -40,8 +55,19 @@
 
 		<div [fdLayoutGridCol]="9">
 			<div class="right">
-				<ng-container *ngIf="selectedIndex !== InvestmentListType.index_reference && !!mdContentPath">
-					<markdown class="expanded-page" lineNumbers [start]="0" [src]="mdContentPath"> </markdown>
+				<ng-container *ngIf="selectedIndex !== InvestmentListType.index_reference">
+					@if (!!mdContentPath) {
+						<markdown class="expanded-page" lineNumbers [start]="0" [src]="mdContentPath"> </markdown>
+					} @else if (ifrmameList.length) {
+						@for (ifrmame of ifrmameList; track $index) {
+							<p *ngIf="ifrmame.title">
+								<span>{{ ifrmame.title }}</span>
+							</p>
+							<iframe [src]="ifrmame.src" width="100%" height="800px" frameborder="0"></iframe>
+						}
+					} @else {
+						<p>No content available.</p>
+					}
 				</ng-container>
 
 				<!-- for index reference -->

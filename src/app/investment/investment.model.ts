@@ -33,8 +33,24 @@ export interface InvestmentGroup {
 }
 
 export enum InvestmentListType {
-	index_reference = 'index_reference',
-	wide_etf_suggestion = 'wide_etf_suggestion',
-	bond_fund_suggestion = 'bond_fund_suggestion',
-	others = 'others',
+	index_reference = 0,
+	wide_etf_suggestion,
+	bond_fund_suggestion,
+	strategy_fund_suggestion,
+	market_status,
+	others,
+}
+
+export interface Table {
+	header1: string;
+	header2: string;
+	header3: string;
+	header4: string;
+	header5: string;
+	value: Array<Array<string>>;
+}
+
+export interface ifrmameList {
+	src: string;
+	title?: string;
 }
