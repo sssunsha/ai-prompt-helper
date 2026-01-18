@@ -1,83 +1,42 @@
 <fd-layout-grid>
 	<div fdLayoutGridRow>
-		<div [fdLayoutGridCol]="12" [colMd]="6" [colLg]="4" [colXl]="3">
+		<div [fdLayoutGridCol]="3">
 			<div class="card">
 				<app-pomodoro-timer></app-pomodoro-timer>
 			</div>
 		</div>
+		<div [fdLayoutGridCol]="3">
+			<div class="card"></div>
+		</div>
 
-		<div [fdLayoutGridCol]="12" [colMd]="6" [colLg]="4" [colXl]="3">
+		<div [fdLayoutGridCol]="3">
+			<div class="card"></div>
+		</div>
+
+		<div [fdLayoutGridCol]="3">
+			<div class="card"></div>
+		</div>
+
+		<div [fdLayoutGridCol]="7">
 			<div class="card">
-				<fd-input-group
-					id="bookmark-search-id"
-					class="card-search"
-					type="search"
-					glyph="search"
-					[glyphAriaLabel]="'Search'"
-					[placeholder]="'Search'"
-					[button]="false"
-					[disabled]="false"
-					[(ngModel)]="service.bookmarkKeyword"
-					(ngModelChange)="onBookmarkKeywordChanged()"
-				>
-				</fd-input-group>
-				@for (bookmarkGroup of service.bookmarkGroups || []; track $index) {
-					<fd-panel [fixed]="true" *ngIf="!bookmarkGroup.isHidden">
-						<h5 fd-panel-title>{{ bookmarkGroup.title }}</h5>
-						<div fd-panel-content>
-							@for (bookmark of bookmarkGroup.children; track $index) {
-								<div *ngIf="!bookmark.isHidden">
-									<a
-										[href]="bookmark.url"
-										[target]="bookmark.shortTitle ?? bookmark.title"
-										fd-link
-										aria-label="Standard"
-										>{{ bookmark.title }}</a
-									>
-								</div>
-								<br />
-							}
-						</div>
-					</fd-panel>
-				}
+				<iframe src="http://value500.com/indexpepb.asp" frameborder="0" height="100%" width="100%"></iframe>
 			</div>
 		</div>
 
-		<div [fdLayoutGridCol]="12" [colMd]="6" [colLg]="4" [colXl]="3">
-			<div class="card">
-				<iframe
-					#favoritesIframe
-					src="/assets/resources/references/favorites.html"
-					frameborder="0"
-					height="100%"
-				></iframe>
-			</div>
-		</div>
-		<!-- https://quote.eastmoney.com/stock/171.CN10Y.html -->
-		<div [fdLayoutGridCol]="12" [colMd]="6" [colLg]="4" [colXl]="3">
+		<div [fdLayoutGridCol]="5">
 			<div class="card">
 				<iframe
 					#debtIframe
 					src="https://quote.eastmoney.com/stock/171.CN10Y.html"
 					frameborder="0"
 					height="100%"
+					width="100%"
 				></iframe>
 			</div>
 		</div>
-	</div>
-	<div [fdLayoutGridCol]="12" [colMd]="6" [colLg]="4" [colXl]="3">
-		<div class="card"></div>
-	</div>
-
-	<div [fdLayoutGridCol]="12" [colMd]="6" [colLg]="4" [colXl]="3">
-		<div class="card"></div>
-	</div>
-
-	<div [fdLayoutGridCol]="12" [colMd]="6" [colLg]="4" [colXl]="3">
-		<div class="card"></div>
-	</div>
-
-	<div [fdLayoutGridCol]="12" [colMd]="6" [colLg]="4" [colXl]="3">
-		<div class="card"></div>
+		<!-- https://quote.eastmoney.com/stock/171.CN10Y.html -->
+		<div [fdLayoutGridCol]="6">
+			<div class="card"></div>
+		</div>
 	</div>
 </fd-layout-grid>

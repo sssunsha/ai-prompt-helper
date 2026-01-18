@@ -3,6 +3,7 @@ import { rolePrompts } from './roles';
 import { generalPersonalPrompts } from './general/general-personals';
 import { readABookPrompts } from './read-a-book';
 import { financialPrompts } from './financial';
+import { investmentPrompts } from './investment';
 
 export const promptSamples: Array<PromptListGroup> = [
 	{
@@ -20,5 +21,9 @@ export const promptSamples: Array<PromptListGroup> = [
 	{
 		title: '金融',
 		items: financialPrompts,
+	},
+	{
+		title: '投资',
+		items: investmentPrompts,
 	},
 ];
