@@ -43,6 +43,14 @@
 					>
 						<span fd-list-title> Strategy Fund </span>
 					</li>
+					<li
+						fd-list-item
+						(click)="listItemSelected(InvestmentListType.industry_fund_suggestion)"
+						[interactive]="true"
+						[selected]="selectedIndex === InvestmentListType.industry_fund_suggestion"
+					>
+						<span fd-list-title> Industry Fund </span>
+					</li>
 					@for (i of [4, 5, 6, 7, 8, 9]; track $index) {
 						<li fd-list-item [interactive]="true">
 							<span fd-list-title> item {{ i }} </span>

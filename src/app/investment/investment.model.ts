@@ -37,6 +37,7 @@ export enum InvestmentListType {
 	wide_etf_suggestion,
 	bond_fund_suggestion,
 	strategy_fund_suggestion,
+	industry_fund_suggestion,
 	market_status,
 	others,
 }
