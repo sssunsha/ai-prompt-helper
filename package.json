@@ -9,6 +9,7 @@
 		"watch": "node files_to_json.js && ng build --watch --configuration development",
 		"test": "node files_to_json.js && ng test",
 		"package": "node files_to_json.js && npm run build --aot --build-optimizer=true --progress=false",
+		"deploy": "bash ./scripts/deploy.sh",
 		"prettier:fix": "prettier --config ./.prettierrc --list-different \"src/**/*{.ts,.js,.json,.scss,.html}\" --write"
 	},
 	"repository": {

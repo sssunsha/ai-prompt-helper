@@ -43,6 +43,11 @@
 				"title": "教材下载网站",
 				"url": "http://www.textbook-info.com/",
 				"shortTitle": "教材下载"
+			},
+			{
+				"title": "非常好玩的动态百科",
+				"url": "https://baike.baidu.com/wikiflow",
+				"shortTitle": "动态百科"
 			}
 		]
 	},
